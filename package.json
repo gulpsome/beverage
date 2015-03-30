@@ -1,0 +1,32 @@
+{
+  "name": "beverage",
+  "description": "give it a gulp",
+  "keywords": [
+    "gulp",
+    "tasks",
+    "package.json",
+    "scripts",
+    "workflow"
+  ],
+  "version": "0.0.0-1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/orlin/beverage.git"
+  },
+  "author": "Orlin M Bozhinov <om@soundsapiens.com>",
+  "main": "index",
+  "dependencies": {
+    "gulp-npm-run": "0.0.0-3",
+    "gulp-npm-test": "0.0.0-5",
+    "gulp-watch": "^4.2.2",
+    "lodash.merge": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "licenses": [
+    {
+      "type": "Unlicense",
+      "url": "http://unlicense.org/"
+    }
+  ]
+}

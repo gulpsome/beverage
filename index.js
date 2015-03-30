@@ -20,19 +20,26 @@ var merge = require('lodash.merge'),
     }
 
 module.exports = function (gulpIn, opts) {
-  var o = def(opts)
-  var gulp = require('gulp-npm-run')(gulpIn, o.scripts)
+  var o = def(opts),
+      gulp = require('gulp-npm-run')(gulpIn, o.scripts),
+      scripts = require('./package.json').scripts || {}
 
-  // modify 'test'; reuse test fn for gulp test:watch
-  var test = require('gulp-npm-test')(gulp, o.test)
+  if (scripts.test) {
+    // modify 'test'; reuse test fn for gulp test:watch
+    var test = require('gulp-npm-test')(gulp, o.test)
 
-  gulp.task('test:watch', o.testWatch.toString(), function() {
-    require('gulp-watch')(o.testWatch, test)
-  })
+    if (o.testWatch) {
+      gulp.task('test:watch', o.testWatch.toString(), function() {
+        require('gulp-watch')(o.testWatch, test)
+      })
+    }
+  }
 
-  gulp.task('build:watch', o.buildWatch.toString(), function(){
-    gulp.watch(o.buildWatch, [o.build])
-  })
+  if (o.buildWatch) {
+    gulp.task('build:watch', o.buildWatch.toString(), function(){
+      gulp.watch(o.buildWatch, [o.build])
+    })
+  }
 
   return gulp
 }

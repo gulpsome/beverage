@@ -21,11 +21,10 @@ var merge = require('lodash.merge'),
 
 module.exports = function (gulpIn, opts) {
   var o = def(opts),
-      gulp = require('gulp-npm-run')(gulpIn, o.scripts),
-      scripts = require('./package.json').scripts || {}
+      gulp = require('gulp-npm-run')(gulpIn, o.scripts)
 
-  if (scripts.test) {
-    // modify 'test'; reuse test fn for gulp test:watch
+  if (o.test) {
+    // TODO: ideally, this would check the caller's package.json (for a test script)
     var test = require('gulp-npm-test')(gulp, o.test)
 
     if (o.testWatch) {

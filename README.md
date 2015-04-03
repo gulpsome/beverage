@@ -44,6 +44,7 @@ Usage
 Available tasks
   build        Compile coffee with inline source-map.
   build:watch  *.coffee
+  dev          DEVELOP
   help         Display this help text.
   test         A gulp-npm-test task, using `mocha`.
   test:watch   index.js,test/*.spec.coffee
@@ -54,6 +55,8 @@ For which, I'd add something like:
 ```javascript
 gulp.task('dev', 'DEVELOP', ['build', 'test', 'build:watch', 'test:watch'])
 ```
+
+Credits to [gulp-help](https://www.npmjs.com/package/gulp-help).
 
 Hope this helps.
 

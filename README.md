@@ -5,7 +5,9 @@ and [gulp-npm-test](https://github.com/orlin/gulp-npm-test)
 I'd still do a lot of copy-pasting between gulpfiles.
 
 There is almost always `test` + `test:watch`,
-and often some kind of `build` + `build:watch` tasks.
+and often some kind of `build` + `build:watch` tasks,
+and some linter / hinter config, that could be common /
+similar across projects.
 
 ## Use
 
@@ -26,6 +28,35 @@ Which won't do anything unless given some options:
 - `scripts: {include: {build: "Builds me something"}}` will setup the script / task, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for full configuration options
 - `build: "build"` already the default, assuming there is some `npm run build`
 - `buildWatch: []` similar to `testWatch` - will build on change
+- `sourcegate: []` creates tasks that write configuration files, documented next
+- `sourcegateModule: 'a-node_modules-module-name'` optional like everything else
+
+The `sourcegate` is useful for writing configuration files from a template to the project's root with possible overrides.  This is done with the [sourcegate module](https://github.com/orlin/sourcegate) and some example files would be: `.jshintrc`, `.jscsrc`, `.eslintrc`, etc.  If there is a package in node_modules that contains some / many / most / all your baseline defaults for coding style preferences / standards, `sourcegateModule` will tell beverage about it so the config is DRYer.  Or each template can set its own individual module / path.  It could be a published module, or a git repo in `devDependencies`.  Beverage offers convenient setup for the following tools:
+
+- [jscs](http://jscs.info)
+- [jshint](http://jshint.com)
+- [eslint](http://eslint.org)
+
+There are recipes for these and the config would look like:
+
+```javascript
+{
+  recipe: 'name', // see above list
+  module: 'name', // overrides the sourcegateModule default
+  preset: 'name', // this is only relevant for jscs (so far)
+  sources: [], // sourcegate's first argument - stuff to merge
+  sources: {}, // shorthand if only one thing has to be merged
+  options: {} // handed to sourcegate
+}
+```
+
+The `recipe` and `module` options are just conveniences.
+If a recipe does not exist (yet), one can use sourcegate directly.
+All that is needed in such a case is `sources` array and `options`.
+
+Some tools, such as jscs have presets, use the `preset` option for easy config.
+In this case, jscs would have to be a dependency of the project using beverage,
+or the configured `module`, checked in precisely this order.
 
 To see what tasks beverage has created:
 

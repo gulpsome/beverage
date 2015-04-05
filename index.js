@@ -21,7 +21,10 @@ var merge = require('lodash.merge'),
 
 module.exports = function (gulpIn, opts) {
   var o = def(opts),
-      gulp = require('gulp-npm-run')(gulpIn, o.scripts)
+      gulp
+
+  if (opts.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
+  else gulp = require('gulp-help')(gulpIn)
 
   if (opts.test) {
     // TODO: ideally, this would check the caller's package.json (for a test script)
@@ -34,7 +37,7 @@ module.exports = function (gulpIn, opts) {
     }
   }
 
-  if (o.buildWatch) {
+  if (o.buildWatch && opts.scripts) {
     gulp.task('build:watch', o.buildWatch.toString(), function(){
       gulp.watch(o.buildWatch, [o.build])
     })

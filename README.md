@@ -1,13 +1,22 @@
 # beverage -- give it a gulp
 
-Because even with [gulp-npm-run](https://github.com/orlin/gulp-npm-run)
-and [gulp-npm-test](https://github.com/orlin/gulp-npm-test)
+The DRYest gulp for the thursty.
+
+## Why
+
+Because even with [gulp-npm-run](https://github.com/orlin/gulp-npm-run),
+[gulp-npm-test](https://github.com/orlin/gulp-npm-test),
+[sourcegate](https://github.com/orlin/sourcegate),
+and [hal-rc](https://github.com/orlin/hal) -
 I'd still do a lot of copy-pasting between gulpfiles.
 
 There is almost always `test` + `test:watch`,
 and often some kind of `build` + `build:watch` tasks,
 and some linter / hinter config, that could be common /
 similar across projects.
+
+All of the above are optional, but there would be no use of beverage
+if none are enabled, or configured.
 
 ## Use
 
@@ -25,7 +34,7 @@ Which won't do anything unless given some options:
 
 - `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for full configuration options, notice `testsRe` makes testing more efficient, if the next option is used
 - `testWatch: []` handed to `gulp-watch`, give it some file paths / globs, runs the tests on change
-- `scripts: {include: {build: "Builds me something"}}` will setup the script / task, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for full configuration options
+- `scripts: {include: {build: "Builds me something"}}` will setup the script / task, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for full configuration options; just like `test`, if there is no `scripts: {}`, at least, gulp-npm-run won't be used and there can't be a `build:watch` task either
 - `build: "build"` already the default, assuming there is some `npm run build`
 - `buildWatch: []` similar to `testWatch` - will build on change
 - `sourcegate: []` creates tasks that write configuration files, documented next

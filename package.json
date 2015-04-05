@@ -25,7 +25,8 @@
   },
   "devDependencies": {
     "coffee-inline-map": "^0.7.0",
-    "gulp": "^3.8.11"
+    "gulp": "^3.8.11",
+    "gulp-help": "^1.3.4"
   },
   "scripts": {
     "build": "node_modules/.bin/coffee-inline-map -b -o sourcegates.js sourcegates.coffee"

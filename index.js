@@ -23,11 +23,11 @@ module.exports = function (gulpIn, opts) {
   var o = def(opts),
       gulp = require('gulp-npm-run')(gulpIn, o.scripts)
 
-  if (o.test) {
+  if (opts.test) {
     // TODO: ideally, this would check the caller's package.json (for a test script)
     var test = require('gulp-npm-test')(gulp, o.test)
 
-    if (o.testWatch) {
+    if (opts.testWatch) {
       gulp.task('test:watch', o.testWatch.toString(), function() {
         require('gulp-watch')(o.testWatch, test)
       })

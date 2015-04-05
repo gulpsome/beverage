@@ -143,7 +143,7 @@ module.exports = function (gulp, options) {
   ))}
 ```
 
-## Test
+## Test [![Build Status](https://img.shields.io/travis/orlin/beverage.svg?style=flat)](https://travis-ci.org/orlin/beverage)
 
 ```sh
 npm test

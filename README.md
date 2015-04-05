@@ -30,11 +30,11 @@ var gulp = require('beverage')(require('gulp'), {
 })
 ```
 
-Which won't do anything unless given some options:
+It will not do anything unless given some options:
 
 - `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for full configuration options, notice `testsRe` makes testing more efficient, if the next option is used
 - `testWatch: []` handed to `gulp-watch`, give it some file paths / globs, runs the tests on change
-- `scripts: {include: {build: "Builds me something"}}` will setup the script / task, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for full configuration options; just like `test`, if there is no `scripts: {}`, at least, gulp-npm-run won't be used and there can't be a `build:watch` task either
+- `scripts: {include: {build: "Builds me something"}}` will setup the script / task, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for full configuration options; just like `test`, if there is no `scripts: {}`, at least, gulp-npm-run won't be used and there can't be a `build:watch` task either, the test script is excluded by default in favor of gulp-npm-test use, described earlier
 - `build: "build"` already the default, assuming there is some `npm run build`
 - `buildWatch: []` similar to `testWatch` - will build on change
 - `sourcegate: []` creates tasks that write configuration files, documented next

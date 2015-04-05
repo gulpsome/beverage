@@ -37,26 +37,40 @@ The `sourcegate` is useful for writing configuration files from a template to th
 - [jshint](http://jshint.com)
 - [eslint](http://eslint.org)
 
-There are recipes for these and the config would look like:
+There are recipes for these, creating a task name `{name}rc`,
+expecting to find and writing a `.{name}rc`.
+The config would look like:
 
 ```javascript
 {
+  task: 'name', // if you want to name it something else
   recipe: 'name', // see above list
   module: 'name', // overrides the sourcegateModule default
   preset: 'name', // this is only relevant for jscs (so far)
   sources: [], // sourcegate's first argument - stuff to merge
-  sources: {}, // shorthand if only one thing has to be merged
+  sources: {}, // shorthand for overrides that don't come from a file
   options: {} // handed to sourcegate
 }
 ```
 
-The `recipe` and `module` options are just conveniences.
-If a recipe does not exist (yet), one can use sourcegate directly.
-All that is needed in such a case is `sources` array and `options`.
-
 Some tools, such as jscs have presets, use the `preset` option for easy config.
 In this case, jscs would have to be a dependency of the project using beverage,
 or the configured `module`, checked in precisely this order.
+
+The `recipe` and `module` options are just conveniences.
+
+If a recipe does not exist (yet), one can use sourcegate directly.
+All that is needed in such a case is:
+
+```javascript
+{
+  task: 'name',
+  sources: [
+    // one or more things to merge
+  ],
+  options: {write: {path: 'where'}} // see sourcegate for more
+}
+```
 
 To see what tasks beverage has created:
 

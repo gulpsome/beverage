@@ -23,9 +23,6 @@ if none are enabled, or configured.
 Beverage is most uniquely useful for its [sourcegate](https://github.com/orlin/beverage#sourcegate) integration,
 which so far does not exist as a standalone "gulpfriendly" thing.
 
-The defaults are tailored to my preferences, but one could always wrap it,
-and drink it as *beverage-other*.
-
 ## Use
 
 [![NPM](https://nodei.co/npm/beverage.png?mini=true)](https://www.npmjs.org/package/beverage)
@@ -130,6 +127,27 @@ gulp.task('dev', 'DEVELOP', ['build', 'test', 'build:watch', 'test:watch'])
 Credits to [gulp-help](https://www.npmjs.com/package/gulp-help).
 
 Hope this helps.
+
+### Defaults
+
+The defaults are tailored to my preferences, but one could always wrap
+and drink it as some other *tasty-beverage*, here is an example:
+
+```javascript
+var merge = require('lodash.merge')
+module.exports = function (gulp, options) {
+  require('beverage')(gulp, merge({
+      // your special beverage options
+    },
+    options
+  ))}
+```
+
+## Test
+
+```sh
+npm test
+```
 
 ## Unlicensed
 

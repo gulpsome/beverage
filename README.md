@@ -39,6 +39,8 @@ It will not do anything unless given some options:
 - `buildWatch: []` similar to `testWatch` - will build on change
 - `sourcegate: []` creates tasks that write configuration files, documented next
 - `sourcegateModule: 'a-node_modules-module-name'` optional like everything else
+- `sourcegateWatch: true` will create a `sg:watch` task
+- `sourcegateMany: false` unsure if this should be implemented at all, creates a task for each individual sourcegate thing
 
 The `sourcegate` is useful for writing configuration files from a template to the project's root with possible overrides.  This is done with the [sourcegate module](https://github.com/orlin/sourcegate) and some example files would be: `.jshintrc`, `.jscsrc`, `.eslintrc`, etc.  If there is a package in node_modules that contains some / many / most / all your baseline defaults for coding style preferences / standards, `sourcegateModule` will tell beverage about it so the config is DRYer.  Or each template can set its own individual module / path.  It could be a published module, or a git repo in `devDependencies`.  Beverage offers convenient setup for the following tools:
 
@@ -46,8 +48,9 @@ The `sourcegate` is useful for writing configuration files from a template to th
 - [jshint](http://jshint.com)
 - [eslint](http://eslint.org)
 
-There are recipes for these, creating a task name `{name}rc`,
-expecting to find and writing a `.{name}rc`.
+There are recipes for these, creating a task name `sg:{name}rc`,
+expecting to find and writing a `.{name}rc` if `sourcegateMany` is `true`,
+and an `sg` task that writes them all, plus an `sg:watch` too.
 The config would look like:
 
 ```javascript

@@ -1,5 +1,8 @@
 'use strict'
 
+var s = require('./sourcegates.js'),
+    sourcegate = require('sourcegate')
+
 var merge = require('lodash.merge'),
     def = function (opts) {
       var o = merge({}, {
@@ -10,7 +13,11 @@ var merge = require('lodash.merge'),
         },
         test: {
           testsRe: /\.spec\.coffee$/,
-        }
+        },
+        sourcegate: [],
+        sourcegateModule: 'hal-rc', // could be any git repo too
+        sourcegateWatch: true,
+        sourcegateMany: false
       }, opts || {})
 
       if(o.scripts.include && o.scripts.include[o.build])
@@ -40,6 +47,15 @@ module.exports = function (gulpIn, opts) {
   if (o.buildWatch && opts.scripts) {
     gulp.task('build:watch', o.buildWatch.toString(), function(){
       gulp.watch(o.buildWatch, [o.build])
+    })
+  }
+
+  if (o.sourcegate.length) {
+    var so = s(gulp, o)
+    gulp.task('sg', 'Rewrite sourcegate targets.', function(){
+      so.forEach(function (sg) {
+        sourcegate.apply(null, sg)
+      })
     })
   }
 

@@ -10,6 +10,8 @@ Because even with [gulp-npm-run](https://github.com/orlin/gulp-npm-run),
 and [hal-rc](https://github.com/orlin/hal) -
 I'd still do a lot of copy-pasting between gulpfiles.
 
+## What
+
 There is almost always `test` + `test:watch`,
 and often some kind of `build` + `build:watch` tasks,
 and some linter / hinter config, that could be common /
@@ -17,6 +19,12 @@ similar across projects.
 
 All of the above are optional, but there would be no use of beverage
 if none are enabled, or configured.
+
+Beverage is most uniquely useful for its [sourcegate](https://github.com/orlin/beverage#sourcegate) integration,
+which so far does not exist as a standalone "gulpfriendly" thing.
+
+The defaults are tailored to my preferences, but one could always wrap it,
+and drink it as *beverage-other*.
 
 ## Use
 
@@ -30,6 +38,8 @@ var gulp = require('beverage')(require('gulp'), {
 })
 ```
 
+### Configure
+
 It will not do anything unless given some options:
 
 - `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for full configuration options, notice `testsRe` makes testing more efficient, if the next option is used
@@ -41,6 +51,8 @@ It will not do anything unless given some options:
 - `sourcegateModule: 'a-node_modules-module-name'` optional like everything else
 - `sourcegateWatch: true` will create a `sg:watch` task
 - `sourcegateMany: false` unsure if this should be implemented at all, creates a task for each individual sourcegate thing
+
+### Sourcegate
 
 The `sourcegate` is useful for writing configuration files from a template to the project's root with possible overrides.  This is done with the [sourcegate module](https://github.com/orlin/sourcegate) and some example files would be: `.jshintrc`, `.jscsrc`, `.eslintrc`, etc.  If there is a package in node_modules that contains some / many / most / all your baseline defaults for coding style preferences / standards, `sourcegateModule` will tell beverage about it so the config is DRYer.  Or each template can set its own individual module / path.  It could be a published module, or a git repo in `devDependencies`.  Beverage offers convenient setup for the following tools:
 
@@ -83,6 +95,8 @@ All that is needed in such a case is:
   options: {write: {path: 'where'}} // see sourcegate for more
 }
 ```
+
+### Help
 
 To see what tasks beverage has created:
 

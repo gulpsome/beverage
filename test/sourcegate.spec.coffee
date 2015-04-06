@@ -12,7 +12,7 @@ testWriteFiles = [
     ['test/out/.jshintrc'],
     [{
       task: 'jshintrc',
-      sources: ['node_modules/hal-rc/.jshintrc.json'],
+      sources: ['node_modules/hal-rc/.jshintrc'],
       options: {write: {path: 'test/out/.jshintrc'}}
     }]
   ]
@@ -22,7 +22,7 @@ testWriteFiles = [
 describe "sourcegates", ->
 
   describe "with no args", ->
-    it "yields args for sourcegate.apply without eny effect", ->
+    it "yields args for sourcegate.apply without any effect", ->
       result = s()
       expect(result).to.eql [[[], {}]] # nothing instead of an error
       expect(sourcegate.apply null, result[0]).to.eql {}

@@ -1,7 +1,10 @@
 require("source-map-support").install()
 R = require("ramda")
 
-module.exports = (gulp, o = {}) ->
+# TODO: this module should become its own project, orlin/hal-rc?
+# as gulp is optional, document which options are gulp-specific
+
+module.exports = (o = {}, gulp) ->
   empty = [[], {}]
   if R.is(Array, o.sourcegate)
     if R.isEmpty(o.sourcegate) then return [empty]
@@ -12,10 +15,15 @@ module.exports = (gulp, o = {}) ->
     res = R.clone(empty)
     unless R.is(Array, sg.sources)
       sg.sources = [sg.sources]
-    res[0] = sg.sources
-    res[1] = sg.options
+    unless sg.recipe?
+      res = [sg.sources, sg.options]
 
     # TODO: get it implemented...
 
     ready.push res
+
+  gulp?.task "sourcegate", "Rewrite sourcegate targets.", ->
+    for sg in ready
+      sourcegate.apply(null, sg)
+
   ready

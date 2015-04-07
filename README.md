@@ -59,7 +59,7 @@ The `sourcegate` is useful for writing configuration files from a template to th
 
 There are recipes for these, creating a task name `sg:{name}rc`,
 expecting to find and writing a `.{name}rc` if `sourcegateMany` is `true`,
-and an `sg` task that writes them all, plus an `sg:watch` too.
+a `sourcegate` task that writes them all, plus a `sourcegate:watch` too.
 The config would look like:
 
 ```javascript

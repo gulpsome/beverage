@@ -1,8 +1,5 @@
 'use strict'
 
-var s = require('./sourcegates.js'),
-    sourcegate = require('sourcegate')
-
 var merge = require('lodash.merge'),
     def = function (opts) {
       var o = merge({}, {
@@ -50,14 +47,7 @@ module.exports = function (gulpIn, opts) {
     })
   }
 
-  if (o.sourcegate.length) {
-    var so = s(gulp, o)
-    gulp.task('sg', 'Rewrite sourcegate targets.', function(){
-      so.forEach(function (sg) {
-        sourcegate.apply(null, sg)
-      })
-    })
-  }
+  if (o.sourcegate.length) require('./sourcegates.js')(o, gulp)
 
   return gulp
 }

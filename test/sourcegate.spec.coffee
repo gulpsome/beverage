@@ -27,7 +27,7 @@ describe "sourcegates", ->
       expect(result).to.eql [[[], {}]] # nothing instead of an error
       expect(sourcegate.apply null, result[0]).to.eql {}
 
-  describe "=>", ->
+  describe "-", ->
     gulp = null
     for [testName, paths, so] in testWriteFiles
       before () ->
@@ -39,8 +39,8 @@ describe "sourcegates", ->
           try fs.unlinkSync(file)
       it testName, ->
         o = sourcegate: so
-        result = s(gulp, o) # options for sourcegate
-        for item in result
+        r = s(o, gulp) # options for sourcegate
+        for item in r
           sourcegate.apply null, item
         for file in paths
           expect(fs.existsSync(file)).is.equal true

@@ -114,6 +114,7 @@ Available tasks
   build:watch  *.coffee
   dev          DEVELOP
   help         Display this help text.
+  sourcegate   Rewrite sourcegate targets.
   test         A gulp-npm-test task, using `mocha`.
   test:watch   index.js,test/*.spec.coffee
 ```

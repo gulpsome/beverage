@@ -12,6 +12,7 @@ module.exports = (o = {}, gulp) ->
     if R.isEmpty(o.sourcegate) then return [empty]
   else return [empty] # or throw?
   ready = []
+  watch = []
 
   for sg in o.sourcegate
     res = R.clone(empty)
@@ -23,14 +24,16 @@ module.exports = (o = {}, gulp) ->
 
     unless sg.recipe?
       res = [sg.sources, sg.options]
+
     else
       sources = []
       config = "node_modules"
       module = sg.module || o.sourcegateModule
       prefix = sg.prefix || o.sourcegatePrefix || ''
       if module
-        config = path.normalize(path.join(config, module,
-                                          "#{prefix}#{sg.recipe}rc"))
+        config = path.normalize("#{config}/#{module}/#{prefix}#{sg.recipe}rc")
+        if o.sourcegateWatch
+          watch.push config
         sources.push config
         sg.options.write ?= {}
         sg.options.write.path = ".#{sg.recipe}rc"
@@ -39,8 +42,13 @@ module.exports = (o = {}, gulp) ->
 
     ready.push res
 
-  gulp?.task "sourcegate", "Rewrite sourcegate targets.", ->
-    for sg in ready
-      sourcegate.apply(null, sg)
+  if gulp?
+    gulp.task "sourcegate", "Write sourcegate targets.", ->
+      for sg in ready
+        sourcegate.apply(null, sg)
+    if o.sourcegateWatch
+      gulp.task "sourcegate:watch",
+        "Watch sourcegate sources for changes.", ->
+          gulp.watch watch, ["sourcegate"]
 
   ready

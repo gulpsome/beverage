@@ -47,7 +47,7 @@ It will not do anything unless given some options:
 - `sourcegate: []` creates tasks that write configuration files, documented next
 - `sourcegateModule: 'a-node_modules-module-name'` optional like everything else
 - `sourcegatePrefix`: '.' will look for `".#{recipe}rc"`, it can also be a path
-- `sourcegateWatch: true` will create a `sg:watch` task
+- `sourcegateWatch: true` will create a `sourcegate:watch` task
 - `sourcegateMany: false` unsure if this should be implemented at all, creates a task for each individual sourcegate thing
 
 ### Sourcegate

@@ -6,4 +6,11 @@ var gulp = require('./index.js')(require('gulp'), {
   sourcegate: [{recipe: 'jshint'}]
 })
 
-gulp.task('dev', 'DEVELOP', ['sourcegate', 'build', 'test', 'build:watch', 'test:watch'])
+gulp.task('dev', 'DEVELOP', [
+  'sourcegate',
+  'build',
+  'test',
+  'sourcegate:watch',
+  'build:watch',
+  'test:watch'
+])

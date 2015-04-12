@@ -1,6 +1,7 @@
 require("source-map-support").install()
 R = require("ramda")
 path = require("path")
+sourcegate = require("sourcegate")
 
 # TODO: this module should become its own project, orlin/hal-rc?
 # as gulp is optional, document which options are gulp-specific

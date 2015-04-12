@@ -4,16 +4,26 @@ s = require('../sourcegates')
 sourcegate = require('sourcegate')
 fs = require('fs')
 
-# 0 testName
+testWR = "test/out" # stands for testWriteRoot
+# 0 test's it "text"
 # 1 paths (to clean-up / for verification of successful write)
 # 2 sourcegate (array of options that produce arguments to call sourcegate with)
 testWriteFiles = [
   [ 'config without recipe writes a .jshintrc',
-    ['test/out/.jshintrc'],
+    ["#{testWR}/.jshintrc"],
     [{
       task: 'jshintrc',
       sources: ['node_modules/hal-rc/.jshintrc'],
-      options: {write: {path: 'test/out/.jshintrc'}}
+      options: {write: {path: "#{testWR}/.jshintrc"}}
+    }]
+  ],
+  [ 'config with a jshint recipe + defaults module writes a .jshintrc',
+    ["#{testWR}/.jshintrc"],
+    [{
+      recipe: 'jshint',
+      module: 'hal-rc',
+      prefix: '.',
+      options: {write: {root: testWR}}
     }]
   ]
 ]

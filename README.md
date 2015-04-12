@@ -46,6 +46,7 @@ It will not do anything unless given some options:
 - `buildWatch: []` similar to `testWatch` - will build on change
 - `sourcegate: []` creates tasks that write configuration files, documented next
 - `sourcegateModule: 'a-node_modules-module-name'` optional like everything else
+- `sourcegatePrefix`: '.' will look for `".#{recipe}rc"`, it can also be a path
 - `sourcegateWatch: true` will create a `sg:watch` task
 - `sourcegateMany: false` unsure if this should be implemented at all, creates a task for each individual sourcegate thing
 
@@ -67,7 +68,8 @@ The config would look like:
   task: 'name', // if you want to name it something else
   recipe: 'name', // see above list
   module: 'name', // overrides the sourcegateModule default
-  preset: 'name', // this is only relevant for jscs (so far)
+  prefix: '.', // what goes between module and "#{recipe}rc"
+  preset: 'name', // this is only relevant for jscs, or "airbnb" so far
   sources: [], // sourcegate's first argument - stuff to merge
   sources: {}, // shorthand for overrides that don't come from a file
   options: {} // handed to sourcegate

@@ -13,6 +13,7 @@ var merge = require('lodash.merge'),
         },
         sourcegate: [],
         sourcegateModule: 'hal-rc', // could be any git repo too
+        sourcegatePrefix: '.',
         sourcegateWatch: true,
         sourcegateMany: false
       }, opts || {})

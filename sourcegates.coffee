@@ -33,7 +33,7 @@ module.exports = (o = {}, gulp) ->
         sources.push config
         sg.options.write ?= {}
         sg.options.write.path = ".#{sg.recipe}rc"
-        
+
       res = [sources.concat(sg.sources), sg.options]
 
     ready.push res

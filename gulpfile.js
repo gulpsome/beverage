@@ -3,7 +3,8 @@ var gulp = require('./index.js')(require('gulp'), {
   buildWatch: ['sourcegates.coffee'],
   test: {},
   testWatch: ['sourcegates.js', 'test/*.coffee'],
-  sourcegate: [{recipe: 'jshint', preset: 'airbnb'}]
+  sourcegate: [{recipe: 'jscs'}, {recipe: 'jshint'}],
+  sourcegatePreset: 'airbnb'
 })
 
 gulp.task('dev', 'DEVELOP', [

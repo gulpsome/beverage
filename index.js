@@ -39,7 +39,8 @@ module.exports = function (gulpIn, opts) {
   else gulp = require('gulp-help')(gulpIn)
 
   if (opts.test) {
-    // TODO: ideally, this would check the caller's package.json (for a test script)
+    // TODO: ideally, this would check the caller's package.json
+    // ... for presence of a "test" script
     var test = require('gulp-npm-test')(gulp, o.test)
 
     if (opts.testWatch) {

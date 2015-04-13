@@ -66,11 +66,12 @@ module.exports = (o = {}, gulp) ->
       prefix = sg.prefix || o.sourcegatePrefix || ''
       preset = sg.preset || o.sourcegatePreset
       if module
-        config = path.normalize("#{config}/#{module}/#{prefix}#{sg.recipe}rc")
-        if o.sourcegateWatch
-          watch.push config
         sources.push getPreset(sg.recipe, preset, module) if preset?
-        sources.push config
+        config = path.normalize("#{config}/#{module}/#{prefix}#{sg.recipe}rc")
+        if fs.existsSync config
+          if o.sourcegateWatch
+            watch.push config
+          sources.push config
         sg.options.write ?= {}
         sg.options.write.path = ".#{sg.recipe}rc"
 

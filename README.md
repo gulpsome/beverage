@@ -45,6 +45,7 @@ It will not do anything unless given some options:
 - `build: "build"` already the default, assuming there is some `npm run build`
 - `buildWatch: []` similar to `testWatch` - will build on change
 - `sourcegate: []` creates tasks that write configuration files, documented next
+- `sourcegateRx: {}` abbreviation for sourcegateRecipeDefaults so one can skip stuff like `sources: {node: true}` for each jshint-linted project, skip the defaults with `sourcegate: [{recipe: 'jshint', sources: {}}] for example, or override with sourcegateModule / module config`
 - `sourcegateModule: 'a-node_modules-module-name'` optional like everything else
 - `sourcegatePrefix`: '.' will look for `".#{recipe}rc"`, it can also be a path
 - `sourcegateWatch: true` will create a `sourcegate:watch` task

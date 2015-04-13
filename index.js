@@ -12,6 +12,13 @@ var merge = require('lodash.merge'),
           testsRe: /\.spec\.coffee$/,
         },
         sourcegate: [],
+        sourcegateRx: {
+          jshint: {node: true},
+          eslint: {
+            parser: 'babel-eslint',
+            env: {node: true}
+          }
+        },
         sourcegateModule: 'hal-rc', // could be any git repo too
         sourcegatePrefix: '.',
         sourcegateWatch: true,

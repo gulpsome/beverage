@@ -17,7 +17,7 @@ module.exports = (o = {}, gulp) ->
   for sg in o.sourcegate
     res = R.clone(empty)
     unless sg.sources?
-      sg.sources = []
+      sg.sources = o.sourcegateRx?[sg.recipe] || []
     else unless R.is(Array, sg.sources)
       sg.sources = [sg.sources]
     sg.options ?= {}

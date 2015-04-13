@@ -5,6 +5,7 @@ require("source-map-support").install()
 R = require("ramda")
 fs = require("fs")
 path = require("path")
+isThere = require("is-there").sync
 sourcegate = require("sourcegate")
 nocomments = require("strip-json-comments")
 
@@ -68,7 +69,7 @@ module.exports = (o = {}, gulp) ->
       if module
         sources.push getPreset(sg.recipe, preset, module) if preset?
         config = path.normalize("#{config}/#{module}/#{prefix}#{sg.recipe}rc")
-        if fs.existsSync config
+        if isThere config
           if o.sourcegateWatch
             watch.push config
           sources.push config

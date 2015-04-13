@@ -126,7 +126,7 @@ Available tasks
 For which, I'd add something like:
 
 ```javascript
-gulp.task('dev', 'DEVELOP', ['build', 'test', 'build:watch', 'test:watch'])
+gulp.task('dev', 'DEVELOP', ['build', 'build:watch', 'test:watch'])
 ```
 
 Credits to [gulp-help](https://www.npmjs.com/package/gulp-help).

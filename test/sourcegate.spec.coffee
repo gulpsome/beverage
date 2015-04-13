@@ -3,6 +3,7 @@
 s = require('../sourcegates')
 sourcegate = require('sourcegate')
 fs = require('fs')
+isThere = require("is-there").sync
 
 testWR = "test/out" # stands for testWriteRoot
 # 0 test's it "text"
@@ -53,4 +54,4 @@ describe "sourcegates", ->
         for item in r
           sourcegate.apply null, item
         for file in paths
-          expect(fs.existsSync(file)).is.equal true
+          expect(isThere file).is.equal true

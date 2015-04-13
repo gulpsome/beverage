@@ -19,6 +19,7 @@
     "gulp-npm-run": "0.0.0-5",
     "gulp-npm-test": "0.0.0-6",
     "gulp-watch": "^4.2.2",
+    "is-there": "^1.1.0",
     "lodash.merge": "^3.1.0",
     "ramda": "^0.13.0",
     "source-map-support": "^0.2.10",

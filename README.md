@@ -7,7 +7,7 @@ The DRYest gulp for the thursty.
 Because even with [gulp-npm-run](https://github.com/orlin/gulp-npm-run),
 [gulp-npm-test](https://github.com/orlin/gulp-npm-test),
 [sourcegate](https://github.com/orlin/sourcegate),
-and [hal-rc](https://github.com/orlin/hal) -
+and [hal-rc](https://github.com/orlin/hal-rc) -
 I'd still do a lot of copy-pasting between gulpfiles.
 
 ## What
@@ -47,7 +47,8 @@ It will not do anything unless given some options:
 - `sourcegate: []` creates tasks that write configuration files, documented next
 - `sourcegateRx: {}` abbreviation for sourcegateRecipeDefaults so one can skip stuff like `sources: {node: true}` for each jshint-linted project, skip the defaults with `sourcegate: [{recipe: 'jshint', sources: {}}] for example, or override with sourcegateModule / module config`
 - `sourcegateModule: 'a-node_modules-module-name'` optional like everything else
-- `sourcegatePrefix`: '.' will look for `".#{recipe}rc"`, it can also be a path
+- `sourcegatePrefix`: '.'` will look for `".#{recipe}rc"`, it can also be a path
+- `sourcegatePreset: "airbnb"` for example, in some cases there are presets across tools, this sets a default one for configuration DRY-ness; presets of tools installed in the project's `node_modules` have priority over presets form `sourcegateModule`'s `node_modules`, this way a project can have its own version of presets
 - `sourcegateWatch: true` will create a `sourcegate:watch` task
 - `sourcegateMany: false` unsure if this should be implemented at all, creates a task for each individual sourcegate thing
 

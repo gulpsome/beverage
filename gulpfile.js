@@ -1,5 +1,5 @@
 var gulp = require('./index.js')(require('gulp'), {
-  scripts: {},
+  scripts: {include: {build: 'sourcegates.js'}},
   buildWatch: ['sourcegates.coffee'],
   test: {},
   testWatch: ['sourcegates.js', 'test/*.coffee'],

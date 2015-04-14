@@ -10,7 +10,19 @@ var merge = require('lodash.merge'),
         },
         test: {
           testsRe: /\.spec\.coffee$/,
-        }
+        },
+        sourcegate: [],
+        sourcegateRx: {
+          jshint: {node: true},
+          eslint: {
+            parser: 'babel-eslint',
+            env: {node: true}
+          }
+        },
+        sourcegateModule: 'hal-rc', // could be any git repo too
+        sourcegatePrefix: '.',
+        sourcegateWatch: true,
+        sourcegateMany: false
       }, opts || {})
 
       if(o.scripts.include && o.scripts.include[o.build])
@@ -21,24 +33,30 @@ var merge = require('lodash.merge'),
 
 module.exports = function (gulpIn, opts) {
   var o = def(opts),
-      gulp = require('gulp-npm-run')(gulpIn, o.scripts)
+      gulp
 
-  if (o.test) {
-    // TODO: ideally, this would check the caller's package.json (for a test script)
+  if (opts.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
+  else gulp = require('gulp-help')(gulpIn)
+
+  if (opts.test) {
+    // TODO: ideally, this would check the caller's package.json
+    // ... for presence of a "test" script
     var test = require('gulp-npm-test')(gulp, o.test)
 
-    if (o.testWatch) {
+    if (opts.testWatch) {
       gulp.task('test:watch', o.testWatch.toString(), function() {
         require('gulp-watch')(o.testWatch, test)
       })
     }
   }
 
-  if (o.buildWatch) {
+  if (o.buildWatch && opts.scripts) {
     gulp.task('build:watch', o.buildWatch.toString(), function(){
       gulp.watch(o.buildWatch, [o.build])
     })
   }
+
+  if (o.sourcegate.length) require('./sourcegates.js')(o, gulp)
 
   return gulp
 }

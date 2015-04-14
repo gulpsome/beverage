@@ -1,0 +1,6 @@
+--compilers coffee:coffee-script/register
+--require test/mocha
+--reporter tap
+--timeout 7000
+--ui bdd
+--colors

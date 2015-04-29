@@ -56,7 +56,7 @@ module.exports = function (gulpIn, opts) {
     })
   }
 
-  if (o.sourcegate.length) require('./sourcegates.js')(o, gulp)
+  if (o.sourcegate.length) require('hal-rc')(o, gulp)
 
   return gulp
 }

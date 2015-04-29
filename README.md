@@ -1,6 +1,6 @@
 # beverage -- give it a gulp
 
-The DRYest gulp for the thursty.
+The DRYest gulp for the thirsty.
 
 ## Why
 

@@ -59,9 +59,7 @@
     "catch",
     "typeof"
   ],
-  "requirePaddingNewLinesBeforeLineComments": {
-    "allExcept": "firstAfterCurly"
-  },
+  "requirePaddingNewLinesBeforeLineComments": false,
   "requirePaddingNewLinesAfterBlocks": true,
   "safeContextKeyword": "_this",
   "validateLineBreaks": "LF",

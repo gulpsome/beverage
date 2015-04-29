@@ -1,7 +1,7 @@
 'use strict'
 
-var merge = require('lodash.merge'),
-    def = function (opts) {
+var merge = require('lodash.merge')
+var def = function(opts) {
       var o = merge({}, {
         build: 'build',
         scripts: {
@@ -9,7 +9,7 @@ var merge = require('lodash.merge'),
           requireStrict: true
         },
         test: {
-          testsRe: /\.spec\.coffee$/,
+          testsRe: /\.spec\.coffee$/
         },
         sourcegate: [],
         sourcegateRx: {
@@ -19,21 +19,21 @@ var merge = require('lodash.merge'),
             env: {node: true}
           }
         },
-        sourcegateModule: 'hal-rc', // could be any git repo too
+        sourcegateModule: 'hal-rc', // could be any git repo as well
         sourcegatePrefix: '.',
         sourcegateWatch: true,
         sourcegateMany: false
       }, opts || {})
 
-      if(o.scripts.include && o.scripts.include[o.build])
+      if (o.scripts.include && o.scripts.include[o.build])
         o = merge({}, o, {scripts: {require: [o.build]}})
 
       return o
     }
 
-module.exports = function (gulpIn, opts) {
-  var o = def(opts),
-      gulp
+module.exports = function(gulpIn, opts) {
+  var o = def(opts)
+  var gulp
 
   if (opts.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
   else gulp = require('gulp-help')(gulpIn)
@@ -51,7 +51,7 @@ module.exports = function (gulpIn, opts) {
   }
 
   if (o.buildWatch && opts.scripts) {
-    gulp.task('build:watch', o.buildWatch.toString(), function(){
+    gulp.task('build:watch', o.buildWatch.toString(), function() {
       gulp.watch(o.buildWatch, [o.build])
     })
   }

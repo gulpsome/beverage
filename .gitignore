@@ -4,8 +4,3 @@
 
 node_modules
 npm-debug.log*
-
-/.jscsrc
-/.jshintrc
-
-/test/out/.*

@@ -5,6 +5,7 @@ node_js:
   - iojs
 branches:
   only:
+    - master
     - active
     - test
 install: npm i

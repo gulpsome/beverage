@@ -2,34 +2,34 @@
 
 var merge = require('lodash.merge')
 var def = function(opts) {
-      var o = merge({}, {
-        build: 'build',
-        scripts: {
-          exclude: ['test'],
-          requireStrict: true
-        },
-        test: {
-          testsRe: /\.spec\.coffee$/
-        },
-        sourcegate: [],
-        sourcegateRx: {
-          jshint: {node: true},
-          eslint: {
-            parser: 'babel-eslint',
-            env: {node: true}
-          }
-        },
-        sourcegateModule: 'hal-rc', // could be any git repo as well
-        sourcegatePrefix: '.',
-        sourcegateWatch: true,
-        sourcegateMany: false
-      }, opts || {})
+    var o = merge({}, {
+      build: 'build',
+      scripts: {
+        exclude: ['test'],
+        requireStrict: true
+      },
+      test: {
+        testsRe: /\.spec\.coffee$/
+      },
+      sourcegate: [],
+      sourcegateModule: 'hal-rc', // could be any git repo as well
+      sourcegatePrefix: 'rc/', // these would override any sourcegatePreset
+      sourcegateRx: {
+        jshint: {node: true},
+        eslint: {
+          parser: 'babel-eslint',
+          env: {node: true}
+        }
+      },
+      sourcegateWatch: true,
+      sourcegateMany: false
+    }, opts || {})
 
-      if (o.scripts.include && o.scripts.include[o.build])
-        o = merge({}, o, {scripts: {require: [o.build]}})
+    if (o.scripts.include && o.scripts.include[o.build])
+      o = merge({}, o, {scripts: {require: [o.build]}})
 
-      return o
-    }
+    return o
+  }
 
 module.exports = function(gulpIn, opts) {
   var o = def(opts)

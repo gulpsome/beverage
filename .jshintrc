@@ -2,6 +2,7 @@
   "browser": true,
   "jquery": true,
   "node": true,
+  "esnext": true,
   "camelcase": true,
   "eqeqeq": true,
   "indent": 2,

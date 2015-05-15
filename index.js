@@ -3,6 +3,7 @@
 var merge = require('lodash.merge')
 var def = function(opts) {
     var o = merge({}, {
+      dotBeverage: ['node_modules/hal-rc', '.'],
       build: 'build',
       scripts: {
         exclude: ['test'],
@@ -21,8 +22,7 @@ var def = function(opts) {
           env: {node: true}
         }
       },
-      sourcegateWatch: true,
-      sourcegateMany: false
+      sourcegateWatch: true
     }, opts || {})
 
     if (o.scripts.include && o.scripts.include[o.build])

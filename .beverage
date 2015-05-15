@@ -1,0 +1,5 @@
+{
+  "test": {},
+  "sourcegate": [{"recipe": "jscs"}, {"recipe": "jshint"}],
+  "sourcegatePreset": "airbnb"
+}

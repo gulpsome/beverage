@@ -20,8 +20,10 @@
     "gulp-npm-run": "0.0.0-5",
     "gulp-npm-test": "0.0.0-6",
     "gulp-watch": "^4.2.2",
+    "hal-rc": "0.0.2",
+    "is-there": "^2.0.0",
     "lodash.merge": "^3.1.0",
-    "hal-rc": "0.0.2"
+    "strip-json-comments": "^1.0.2"
   },
   "devDependencies": {
     "gulp": "^3.8.11"

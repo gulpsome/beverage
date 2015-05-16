@@ -1,24 +1,11 @@
 'use strict'
 
-var fs = require('fs')
 var path = require('path')
-var isThere = require('is-there')
-var nocomments = require('strip-json-comments')
 var merge = require('lodash.merge')
-
+var sourcegate = require('sourcegate')
 
 var beverageGet = function(beveragePath) {
-  var what = path.normalize(beveragePath + '/.beverage')
-
-  if (isThere(what)) {
-    try {
-      return JSON.parse(nocomments(fs.readFileSync(what).toString()))
-    }
-    catch (e) {
-      console.error(e)
-      throw new Error('Could not find .beverage at: ' + beveragePath.toString())
-    }
-  }
+  return sourcegate([path.normalize(beveragePath + '/.beverage')])
 }
 
 

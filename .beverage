@@ -1,5 +1,6 @@
 {
   "test": {},
   "sourcegate": [{"recipe": "jscs"}, {"recipe": "jshint"}],
-  "sourcegatePreset": "airbnb"
+  "sourcegatePreset": "airbnb",
+  "sourcegateRx": {"jshint": {"esnext": true}}
 }

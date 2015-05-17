@@ -2,5 +2,6 @@
   "test": {},
   "sourcegate": [{"recipe": "jscs"}, {"recipe": "jshint"}],
   "sourcegatePreset": "airbnb",
-  "sourcegateRx": {"jshint": {"esnext": true}}
+  "sourcegateRx": {"jshint": {"esnext": true}},
+  "buildWatch": ["index.es"]
 }

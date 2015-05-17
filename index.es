@@ -3,15 +3,14 @@ require('source-map-support').install()
 
 var sourcegate = require('sourcegate')
 
-
-var def = function(opts = {}) {
+function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
       '.',
       'node_modules/hal-rc',
       'node_modules/beverage/node_modules/hal-rc'
     ]
 
-    var o = sourcegate([{
+    let o = sourcegate([{
       build: 'build',
       scripts: {
         exclude: ['test'],
@@ -34,15 +33,15 @@ var def = function(opts = {}) {
     }].concat(opts.dotBeverage.map(path => path + '/.beverage'), [opts]))
 
     if (o.scripts.include && o.scripts.include[o.build])
-      o = sourcegate(o, {scripts: {require: [o.build]}})
+      o = sourcegate([o, {scripts: {require: [o.build]}}])
 
     return o
   }
 
 
 module.exports = function(gulpIn, opts) {
-  var o = def(opts)
-  var gulp
+  let o = def(opts),
+      gulp
 
   if (o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
   else gulp = require('gulp-help')(gulpIn)
@@ -50,7 +49,7 @@ module.exports = function(gulpIn, opts) {
   if (o.test) {
     // TODO: ideally, this would check the caller's package.json
     // ... for presence of a "test" script
-    var test = require('gulp-npm-test')(gulp, o.test)
+    let test = require('gulp-npm-test')(gulp, o.test)
 
     if (o.testWatch) {
       gulp.task('test:watch', o.testWatch.toString(), function() {

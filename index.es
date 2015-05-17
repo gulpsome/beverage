@@ -4,16 +4,15 @@ require('source-map-support').install()
 var merge = require('lodash.merge')
 var sourcegate = require('sourcegate')
 
-var beverageGet = function(beveragePaths) {
-  return sourcegate(beveragePaths.map(bp => bp + '/.beverage'))
-}
 
+var def = function(opts = {}) {
+    opts.dotBeverage = opts.dotBeverage || [
+      '.',
+      'node_modules/hal-rc',
+      'node_modules/beverage/node_modules/hal-rc'
+    ]
 
-var def = function(opts) {
-    opts = opts || {}
-    opts.dotBeverage = opts.dotBeverage || ['.']
-
-    var o = merge({}, {
+    var o = sourcegate([{
       build: 'build',
       scripts: {
         exclude: ['test'],
@@ -33,7 +32,7 @@ var def = function(opts) {
         }
       },
       sourcegateWatch: true
-    }, beverageGet(opts.dotBeverage), opts)
+    }].concat(opts.dotBeverage.map(path => path + '/.beverage'), [opts]))
 
     if (o.scripts.include && o.scripts.include[o.build])
       o = merge({}, o, {scripts: {require: [o.build]}})

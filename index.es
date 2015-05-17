@@ -1,7 +1,6 @@
 'use strict'
 require('source-map-support').install()
 
-var merge = require('lodash.merge')
 var sourcegate = require('sourcegate')
 
 
@@ -35,7 +34,7 @@ var def = function(opts = {}) {
     }].concat(opts.dotBeverage.map(path => path + '/.beverage'), [opts]))
 
     if (o.scripts.include && o.scripts.include[o.build])
-      o = merge({}, o, {scripts: {require: [o.build]}})
+      o = sourcegate(o, {scripts: {require: [o.build]}})
 
     return o
   }

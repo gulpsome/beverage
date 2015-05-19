@@ -2,6 +2,7 @@
   "test": {},
   "buildWatch": ["index.es"],
   "sourcegatePreset": "airbnb",
+  "sourcegateModule": "hal-rc",
   "sourcegate": [
     {"recipe": "jscs"},
     {"recipe": "jshint", "sources": {

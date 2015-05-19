@@ -19,7 +19,7 @@ function def(opts = {}) {
       test: {
         testsRe: /\.spec\.coffee$/
       },
-      sourcegateModule: 'hal-rc', // could be any git repo as well
+      sourcegateModule: 'beverage/node_modules/hal-rc', // could be any git repo as well
       sourcegatePrefix: 'rc/', // these would override any sourcegatePreset
       sourcegate: [
         {recipe: 'eslint', sources: {

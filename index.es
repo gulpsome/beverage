@@ -19,16 +19,13 @@ function def(opts = {}) {
       test: {
         testsRe: /\.spec\.coffee$/
       },
-      sourcegate: [],
       sourcegateModule: 'hal-rc', // could be any git repo as well
       sourcegatePrefix: 'rc/', // these would override any sourcegatePreset
-      sourcegateRx: {
-        jshint: {node: true},
-        eslint: {
-          parser: 'babel-eslint',
-          env: {node: true}
-        }
-      },
+      sourcegate: [
+        {recipe: 'eslint', sources: {
+          parser: 'babel-eslint'
+        }}
+      ],
       sourcegateWatch: true
     }].concat(opts.dotBeverage.map(path => path + '/.beverage'), [opts]))
 

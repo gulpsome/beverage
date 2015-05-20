@@ -1,62 +1,66 @@
-'use strict'
+'use strict';
+require('source-map-support').install();
 
-var merge = require('lodash.merge')
-var def = function(opts) {
-    var o = merge({}, {
-      build: 'build',
-      scripts: {
-        exclude: ['test'],
-        requireStrict: true
-      },
-      test: {
-        testsRe: /\.spec\.coffee$/
-      },
-      sourcegate: [],
-      sourcegateModule: 'hal-rc', // could be any git repo as well
-      sourcegatePrefix: 'rc/', // these would override any sourcegatePreset
-      sourcegateRx: {
-        jshint: {node: true},
-        eslint: {
-          parser: 'babel-eslint',
-          env: {node: true}
-        }
-      },
-      sourcegateWatch: true,
-      sourcegateMany: false
-    }, opts || {})
+var sourcegate = require('sourcegate');
 
-    if (o.scripts.include && o.scripts.include[o.build])
-      o = merge({}, o, {scripts: {require: [o.build]}})
+function def() {
+  var opts = arguments[0] === undefined ? {} : arguments[0];
 
-    return o
-  }
+  opts.dotBeverage = opts.dotBeverage || ['.', 'node_modules/hal-rc', 'node_modules/beverage/node_modules/hal-rc'];
 
-module.exports = function(gulpIn, opts) {
-  var o = def(opts)
-  var gulp
+  var o = sourcegate([{
+    build: 'build',
+    scripts: {
+      exclude: ['test'],
+      requireStrict: true
+    },
+    test: {
+      testsRe: /\.spec\.coffee$/
+    },
+    sourcegateModule: 'beverage/node_modules/hal-rc', // could be any git repo as well
+    sourcegatePrefix: 'rc/', // these would override any sourcegatePreset
+    sourcegate: [{ recipe: 'eslint', sources: {
+        parser: 'babel-eslint'
+      } }],
+    sourcegateWatch: true
+  }].concat(opts.dotBeverage.map(function (path) {
+    return path + '/.beverage';
+  }), [opts]));
 
-  if (opts.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
-  else gulp = require('gulp-help')(gulpIn)
+  if (o.scripts.include && o.scripts.include[o.build]) o = sourcegate([o, { scripts: { require: [o.build] } }]);
 
-  if (opts.test) {
-    // TODO: ideally, this would check the caller's package.json
-    // ... for presence of a "test" script
-    var test = require('gulp-npm-test')(gulp, o.test)
-
-    if (opts.testWatch) {
-      gulp.task('test:watch', o.testWatch.toString(), function() {
-        require('gulp-watch')(o.testWatch, test)
-      })
-    }
-  }
-
-  if (o.buildWatch && opts.scripts) {
-    gulp.task('build:watch', o.buildWatch.toString(), function() {
-      gulp.watch(o.buildWatch, [o.build])
-    })
-  }
-
-  if (o.sourcegate.length) require('hal-rc')(o, gulp)
-
-  return gulp
+  return o;
 }
+
+module.exports = function (gulpIn, opts) {
+  var o = def(opts),
+      gulp = undefined;
+
+  if (o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts);else gulp = require('gulp-help')(gulpIn);
+
+  if (o.test) {
+    (function () {
+      // TODO: ideally, this would check the caller's package.json
+      // ... for presence of a "test" script
+      var test = require('gulp-npm-test')(gulp, o.test);
+
+      if (o.testWatch) {
+        gulp.task('test:watch', o.testWatch.toString(), function () {
+          require('gulp-watch')(o.testWatch, test);
+        });
+      }
+    })();
+  }
+
+  if (o.buildWatch && o.scripts) {
+    gulp.task('build:watch', o.buildWatch.toString(), function () {
+      gulp.watch(o.buildWatch, [o.build]);
+    });
+  }
+
+  if (o.sourcegate.length) require('hal-rc')(o, gulp);
+
+  return gulp;
+};
+
+//# sourceMappingURL=data:application/json;base64,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QUE7S0FDcEMsQ0FBQyxDQUFBO0dBQ0g7O0FBRUQsTUFBSSxDQUFDLENBQUMsVUFBVSxDQUFDLE1BQU0sRUFBRSxPQUFPLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxFQUFFLElBQUksQ0FBQyxDQUFBOztBQUVuRCxTQUFPLElBQUksQ0FBQTtDQUNaLENBQUEiLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyIndXNlIHN0cmljdCdcbnJlcXVpcmUoJ3NvdXJjZS1tYXAtc3VwcG9ydCcpLmluc3RhbGwoKVxuXG52YXIgc291cmNlZ2F0ZSA9IHJlcXVpcmUoJ3NvdXJjZWdhdGUnKVxuXG5mdW5jdGlvbiBkZWYob3B0cyA9IHt9KSB7XG4gICAgb3B0cy5kb3RCZXZlcmFnZSA9IG9wdHMuZG90QmV2ZXJhZ2UgfHwgW1xuICAgICAgJy4nLFxuICAgICAgJ25vZGVfbW9kdWxlcy9oYWwtcmMnLFxuICAgICAgJ25vZGVfbW9kdWxlcy9iZXZlcmFnZS9ub2RlX21vZHVsZXMvaGFsLXJjJ1xuICAgIF1cblxuICAgIGxldCBvID0gc291cmNlZ2F0ZShbe1xuICAgICAgYnVpbGQ6ICdidWlsZCcsXG4gICAgICBzY3JpcHRzOiB7XG4gICAgICAgIGV4Y2x1ZGU6IFsndGVzdCddLFxuICAgICAgICByZXF1aXJlU3RyaWN0OiB0cnVlXG4gICAgICB9LFxuICAgICAgdGVzdDoge1xuICAgICAgICB0ZXN0c1JlOiAvXFwuc3BlY1xcLmNvZmZlZSQvXG4gICAgICB9LFxuICAgICAgc291cmNlZ2F0ZU1vZHVsZTogJ2JldmVyYWdlL25vZGVfbW9kdWxlcy9oYWwtcmMnLCAvLyBjb3VsZCBiZSBhbnkgZ2l0IHJlcG8gYXMgd2VsbFxuICAgICAgc291cmNlZ2F0ZVByZWZpeDogJ3JjLycsIC8vIHRoZXNlIHdvdWxkIG92ZXJyaWRlIGFueSBzb3VyY2VnYXRlUHJlc2V0XG4gICAgICBzb3VyY2VnYXRlOiBbXG4gICAgICAgIHtyZWNpcGU6ICdlc2xpbnQnLCBzb3VyY2VzOiB7XG4gICAgICAgICAgcGFyc2VyOiAnYmFiZWwtZXNsaW50J1xuICAgICAgICB9fVxuICAgICAgXSxcbiAgICAgIHNvdXJjZWdhdGVXYXRjaDogdHJ1ZVxuICAgIH1dLmNvbmNhdChvcHRzLmRvdEJldmVyYWdlLm1hcChwYXRoID0+IHBhdGggKyAnLy5iZXZlcmFnZScpLCBbb3B0c10pKVxuXG4gICAgaWYgKG8uc2NyaXB0cy5pbmNsdWRlICYmIG8uc2NyaXB0cy5pbmNsdWRlW28uYnVpbGRdKVxuICAgICAgbyA9IHNvdXJjZWdhdGUoW28sIHtzY3JpcHRzOiB7cmVxdWlyZTogW28uYnVpbGRdfX1dKVxuXG4gICAgcmV0dXJuIG9cbiAgfVxuXG5cbm1vZHVsZS5leHBvcnRzID0gZnVuY3Rpb24oZ3VscEluLCBvcHRzKSB7XG4gIGxldCBvID0gZGVmKG9wdHMpLFxuICAgICAgZ3VscFxuXG4gIGlmIChvLnNjcmlwdHMpIGd1bHAgPSByZXF1aXJlKCdndWxwLW5wbS1ydW4nKShndWxwSW4sIG8uc2NyaXB0cylcbiAgZWxzZSBndWxwID0gcmVxdWlyZSgnZ3VscC1oZWxwJykoZ3VscEluKVxuXG4gIGlmIChvLnRlc3QpIHtcbiAgICAvLyBUT0RPOiBpZGVhbGx5LCB0aGlzIHdvdWxkIGNoZWNrIHRoZSBjYWxsZXIncyBwYWNrYWdlLmpzb25cbiAgICAvLyAuLi4gZm9yIHByZXNlbmNlIG9mIGEgXCJ0ZXN0XCIgc2NyaXB0XG4gICAgbGV0IHRlc3QgPSByZXF1aXJlKCdndWxwLW5wbS10ZXN0JykoZ3VscCwgby50ZXN0KVxuXG4gICAgaWYgKG8udGVzdFdhdGNoKSB7XG4gICAgICBndWxwLnRhc2soJ3Rlc3Q6d2F0Y2gnLCBvLnRlc3RXYXRjaC50b1N0cmluZygpLCBmdW5jdGlvbigpIHtcbiAgICAgICAgcmVxdWlyZSgnZ3VscC13YXRjaCcpKG8udGVzdFdhdGNoLCB0ZXN0KVxuICAgICAgfSlcbiAgICB9XG4gIH1cblxuICBpZiAoby5idWlsZFdhdGNoICYmIG8uc2NyaXB0cykge1xuICAgIGd1bHAudGFzaygnYnVpbGQ6d2F0Y2gnLCBvLmJ1aWxkV2F0Y2gudG9TdHJpbmcoKSwgZnVuY3Rpb24oKSB7XG4gICAgICBndWxwLndhdGNoKG8uYnVpbGRXYXRjaCwgW28uYnVpbGRdKVxuICAgIH0pXG4gIH1cblxuICBpZiAoby5zb3VyY2VnYXRlLmxlbmd0aCkgcmVxdWlyZSgnaGFsLXJjJykobywgZ3VscClcblxuICByZXR1cm4gZ3VscFxufVxuIl19

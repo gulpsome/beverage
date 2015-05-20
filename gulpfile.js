@@ -1,9 +1,7 @@
-var gulp = require('./index.js')(require('gulp'), {
-  test: {},
-  sourcegate: [{recipe: 'jscs'}, {recipe: 'jshint'}],
-  sourcegatePreset: 'airbnb'
-})
+var gulp = require('./index.js')(require('gulp'))
 
 gulp.task('dev', 'DEVELOP', [
-  'sourcegate:watch'
+  'build',
+  'sourcegate:watch',
+  'build:watch'
 ])

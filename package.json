@@ -20,13 +20,17 @@
     "gulp-npm-run": "0.0.0-5",
     "gulp-npm-test": "0.0.0-6",
     "gulp-watch": "^4.2.2",
-    "lodash.merge": "^3.1.0",
-    "hal-rc": "0.0.1"
+    "hal-rc": "0.0.2",
+    "source-map-support": "^0.2.10",
+    "sourcegate": "^0.1.2"
   },
   "devDependencies": {
+    "babel": "^5.4.3",
     "gulp": "^3.8.11"
   },
   "scripts": {
+    "build": "node_modules/.bin/babel index.es -o index.js --source-maps inline",
+    "build:watch": "npm run build -- -w",
     "test": "node_modules/.bin/gulp"
   },
   "licenses": [

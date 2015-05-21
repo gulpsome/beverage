@@ -6,6 +6,7 @@ var sourcegate = require('sourcegate')
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
       'node_modules/beverage/node_modules/hal-rc',
+      'node_modules/hal-rc',
       '.'
     ]
 
@@ -16,16 +17,8 @@ function def(opts = {}) {
         requireStrict: true
       },
       test: {
-        testsRe: /\.spec\.coffee$/
-      },
-      sourcegateModule: 'beverage/node_modules/hal-rc', // could be any git repo as well
-      sourcegatePrefix: 'rc/', // these would override any sourcegatePreset
-      sourcegate: [
-        {recipe: 'eslint', sources: {
-          parser: 'babel-eslint'
-        }}
-      ],
-      sourcegateWatch: true
+        testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
+      }
     }].concat(opts.dotBeverage.map(path => path + '/.beverage'), opts))
 
     if (o.scripts.include && o.scripts.include[o.build])

@@ -5,9 +5,8 @@ var sourcegate = require('sourcegate')
 
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
-      '.',
-      'node_modules/hal-rc',
-      'node_modules/beverage/node_modules/hal-rc'
+      'node_modules/beverage/node_modules/hal-rc',
+      '.'
     ]
 
     let o = sourcegate([{
@@ -27,7 +26,7 @@ function def(opts = {}) {
         }}
       ],
       sourcegateWatch: true
-    }].concat(opts.dotBeverage.map(path => path + '/.beverage'), [opts]))
+    }].concat(opts.dotBeverage.map(path => path + '/.beverage'), opts))
 
     if (o.scripts.include && o.scripts.include[o.build])
       o = sourcegate([o, {scripts: {require: [o.build]}}])

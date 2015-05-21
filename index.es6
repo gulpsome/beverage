@@ -6,17 +6,16 @@ var sourcegate = require('sourcegate')
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
       'node_modules/beverage/node_modules/hal-rc',
-      'node_modules/hal-rc',
       '.'
     ]
 
     let o = sourcegate([{
       build: 'build',
       scripts: {
-        exclude: ['test'],
+        exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
         requireStrict: true
       },
-      test: {
+      test: { // NOTE: test is always enabled because of this default -- not so good...
         testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
       }
     }].concat(opts.dotBeverage.map(path => path + '/.beverage'), opts))

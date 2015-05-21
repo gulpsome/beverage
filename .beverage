@@ -1,6 +1,6 @@
 {
   "test": {},
-  "buildWatch": ["index.es"],
+  "buildWatch": ["index.es6"],
   "sourcegatePreset": "airbnb",
   "sourcegateModule": "hal-rc",
   "sourcegate": [

@@ -29,7 +29,7 @@
     "gulp": "^3.8.11"
   },
   "scripts": {
-    "build": "node_modules/.bin/babel index.es -o index.js --source-maps inline",
+    "build": "node_modules/.bin/babel index.es6 -o index.js --source-maps inline",
     "build:watch": "npm run build -- -w",
     "test": "node_modules/.bin/gulp"
   },

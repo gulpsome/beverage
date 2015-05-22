@@ -101,6 +101,11 @@ module.exports = function (gulp, options) {
 npm test
 ```
 
+## Dependencies
+
+[![Dependency Status](https://david-dm.org/orlin/beverage.svg)](https://david-dm.org/orlin/beverage)
+[![devDependency Status](https://david-dm.org/orlin/beverage/dev-status.svg)](https://david-dm.org/orlin/beverage#info=devDependencies)
+
 ## Unlicensed
 
 This is free and unencumbered public domain software.

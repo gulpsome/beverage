@@ -35,7 +35,7 @@ var gulp = require('beverage')(require('gulp'), {
 
 Or, even simpler, if beverage fulfils all your gulp task needs, you could load options from a `.beverage` file with just the following line in `gulpfile.js` to set gulp up:
 
-```
+```javascript
 require(‘beverage’)(require(‘gulp’))
 ```
 
@@ -97,7 +97,13 @@ Beverage options are deep-merged in the following order of sources:
 3. `./.beverage` - your project options via a configuration file
 4. `gulpfile.js` - your project options via javascript code
 
-Steps 2 and 3 can be changed with a `dotBeverage` option given through `gulpfile.js`.  It’s an array of paths where `.beverage` is to be looked for.
+Steps 2 and 3 can be changed with a `dotBeverage` option given through `gulpfile.js`.  It’s an array of paths where `.beverage` is to be looked for.  For example, if you had a package called `special-recipe` that had all your default configuration, here is a `gulpfile.js` starting point:
+
+```javascript
+var gulp = require(‘beverage’)(require(‘gulp’), {
+  dotBeverage: [‘node_modules/special-recipe’, ’.’]
+})
+```
 
 One could of-course write a module that wraps beverage, whether to change default options or add functionality that my beverage won’t include:
 

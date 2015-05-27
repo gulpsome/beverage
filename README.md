@@ -30,12 +30,20 @@ All that's needed in a `gulpfile.js`, besides gulp, for starters, is:
 var gulp = require('beverage')(require('gulp'), {
   // options listed next
 })
+// use gulp as you would otherise
+```
+
+Or, even simpler, if beverage fulfils all your gulp task needs, you could load options from a `.beverage` file with just the following line in `gulpfile.js` to set gulp up:
+
+```
+require(‘beverage’)(require(‘gulp’))
 ```
 
 ### Configure
 
 It will not do anything unless given some options:
 
+- `dotBeverage: []` contains the relative paths where beverage will look for `.beverage` configuration files - the default is `[‘node_modules/beverage/node_modules/hal-rc’, ’.’]` - this is the only option one would have to override via `gulpfile.js`
 - `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for full configuration options, notice `testsRe` makes testing more efficient, if the next option is used
 - `testWatch: []` handed to `gulp-watch`, give it some file paths / globs, runs the tests on change
 - `scripts: {include: {build: "Builds me something"}}` will setup the script / task, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for full configuration options; just like `test`, if there is no `scripts: {}`, at least, gulp-npm-run won't be used and there can't be a `build:watch` task either, the test script is excluded by default in favor of gulp-npm-test use, described earlier
@@ -51,7 +59,7 @@ To see what tasks beverage has created:
 gulp help #or just $ gulp
 ```
 
-This is the default `gulp` task.  Override with a custom default according to preference.
+Help is the default `gulp` task.  Create a `’default’` task to change that.
 
 Here is an example output:
 
@@ -80,19 +88,30 @@ Credits to [gulp-help](https://www.npmjs.com/package/gulp-help).
 
 Hope this helps.
 
-### Defaults
+### Defaults & Overrides
 
-The defaults are tailored to my preferences, but one could always wrap
-and drink it as some other *tasty-beverage*, here is an example:
+Beverage options are deep-merged in the following order of sources:
+
+1. `index.es6` - look at the `def` function (it has a few defaults)
+2. `./node_modules/beverage/node_modules/hal-rc/.beverage` - where I keep my preferred beverage defaults
+3. `./.beverage` - your project options via a configuration file
+4. `gulpfile.js` - your project options via javascript code
+
+Steps 2 and 3 can be changed with a `dotBeverage` option given through `gulpfile.js`.  It’s an array of paths where `.beverage` is to be looked for.
+
+One could of-course write a module that wraps beverage, whether to change default options or add functionality that my beverage won’t include:
 
 ```javascript
 var merge = require('lodash.merge')
-module.exports = function (gulp, options) {
-  require('beverage')(gulp, merge({
+module.exports = function (gulpIn, options) {
+  var gulp = require('beverage')(gulpIn, merge({
       // your special beverage options
     },
     options
-  ))}
+  ))
+// do more with gulp…
+return gulp
+}
 ```
 
 ## Test [![Build Status](https://img.shields.io/travis/orlin/beverage.svg?style=flat)](https://travis-ci.org/orlin/beverage)

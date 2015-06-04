@@ -36,11 +36,8 @@ module.exports = function(gulpIn, opts) {
   if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
   else gulp = require('gulp-help')(gulpIn)
 
-  console.log(pkg.scripts)
   if (pkg.scripts) {
-    if (o.test) {
-      // TODO: ideally, this would check the caller's package.json
-      // ... for presence of a "test" script
+    if (o.test && pkg.scripts.test) {
       let test = require('gulp-npm-test')(gulp, o.test)
 
       if (o.testWatch) {

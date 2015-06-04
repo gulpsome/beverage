@@ -1,6 +1,8 @@
 'use strict'
 require('source-map-support').install()
 
+var path = require('path')
+var pkg = require(path.join(process.cwd(), 'package.json'))
 var sourcegate = require('sourcegate')
 
 function def(opts = {}) {
@@ -31,28 +33,31 @@ module.exports = function(gulpIn, opts) {
   let o = def(opts),
       gulp
 
-  if (o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
+  if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
   else gulp = require('gulp-help')(gulpIn)
 
-  if (o.test) {
-    // TODO: ideally, this would check the caller's package.json
-    // ... for presence of a "test" script
-    let test = require('gulp-npm-test')(gulp, o.test)
+  console.log(pkg.scripts)
+  if (pkg.scripts) {
+    if (o.test) {
+      // TODO: ideally, this would check the caller's package.json
+      // ... for presence of a "test" script
+      let test = require('gulp-npm-test')(gulp, o.test)
 
-    if (o.testWatch) {
-      gulp.task('test:watch', o.testWatch.toString(), function() {
-        require('gulp-watch')(o.testWatch, test)
+      if (o.testWatch) {
+        gulp.task('test:watch', o.testWatch.toString(), function() {
+          require('gulp-watch')(o.testWatch, test)
+        })
+      }
+    }
+
+    if (o.buildWatch && o.scripts) {
+      gulp.task('build:watch', o.buildWatch.toString(), function() {
+        gulp.watch(o.buildWatch, [o.build])
       })
     }
   }
 
-  if (o.buildWatch && o.scripts) {
-    gulp.task('build:watch', o.buildWatch.toString(), function() {
-      gulp.watch(o.buildWatch, [o.build])
-    })
-  }
-
-  if (o.sourcegate.length) require('hal-rc')(o, gulp)
+  if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
 
   return gulp
 }

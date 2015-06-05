@@ -48,7 +48,7 @@ module.exports = function(gulpIn, opts) {
     }
 
     if (o.buildWatch && o.scripts) {
-      gulp.task('build:watch', o.buildWatch.toString(), function() {
+      gulp.task(o.build + ':watch', o.buildWatch.toString(), function() {
         gulp.watch(o.buildWatch, [o.build])
       })
     }

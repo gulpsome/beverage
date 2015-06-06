@@ -4,6 +4,9 @@ require('source-map-support').install()
 var path = require('path')
 var pkg = require(path.join(process.cwd(), 'package.json'))
 var sourcegate = require('sourcegate')
+var harp = require('harp')
+var sync = require('browser-sync')
+var reload = sync.reload
 
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
@@ -53,6 +56,34 @@ module.exports = function(gulpIn, opts) {
       })
     }
   }
+
+  if (o.harp) {
+    gulp.task(o.harp.name || 'harp', o.harp.help || 'Harp server', function () {
+      harp.server(o.harp.path || process.cwd(), {
+        port: o.harp.port || 9000
+      }, function () {
+        if (o.harp.sync) {
+          sync(o.harp.sync.options || {})
+          if (o.harp.sync.reload) {
+            if (o.harp.sync.stream) {
+              // streaming changes
+              gulp.watch(o.harp.sync.stream).on('change', function (file) {
+                reload(file.path, {stream: true});
+              })
+            }
+            // reload non-streaming (appended exclusions)
+            let nonStreaming = o.harp.sync.reload.concat(
+              o.harp.sync.stream.map(streamed => '!' + streamed + '+(|.map)')
+            )
+            gulp.watch(nonStreaming, function () {
+              reload()
+            })
+          }
+        }
+      })
+    })
+  }
+
 
   if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
 

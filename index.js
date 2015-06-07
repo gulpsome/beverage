@@ -1,62 +1,60 @@
-'use strict';
-require('source-map-support').install();
+'use strict'
+require('source-map-support').install()
 
-var path = require('path');
-var pkg = require(path.join(process.cwd(), 'package.json'));
-var sourcegate = require('sourcegate');
+var path = require('path')
+var pkg = require(path.join(process.cwd(), 'package.json'))
+var sourcegate = require('sourcegate')
 
-function def() {
-  var opts = arguments[0] === undefined ? {} : arguments[0];
+function def(opts = {}) {
+    opts.dotBeverage = opts.dotBeverage || [
+      'node_modules/beverage/node_modules/hal-rc',
+      '.'
+    ]
 
-  opts.dotBeverage = opts.dotBeverage || ['node_modules/beverage/node_modules/hal-rc', '.'];
+    let o = sourcegate([{
+      build: 'build',
+      scripts: {
+        exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
+        requireStrict: true
+      },
+      test: { // NOTE: test is always enabled because of this default -- not so good...
+        testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
+      }
+    }].concat(opts.dotBeverage.map(path => path + '/.beverage'), opts))
 
-  var o = sourcegate([{
-    build: 'build',
-    scripts: {
-      exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
-      requireStrict: true
-    },
-    test: { // NOTE: test is always enabled because of this default -- not so good...
-      testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
-    }
-  }].concat(opts.dotBeverage.map(function (path) {
-    return path + '/.beverage';
-  }), opts));
+    if (o.scripts.include && o.scripts.include[o.build])
+      o = sourcegate([o, {scripts: {require: [o.build]}}])
 
-  if (o.scripts.include && o.scripts.include[o.build]) o = sourcegate([o, { scripts: { require: [o.build] } }]);
+    return o
+  }
 
-  return o;
-}
 
-module.exports = function (gulpIn, opts) {
-  var o = def(opts),
-      gulp = undefined;
+module.exports = function(gulpIn, opts) {
+  let o = def(opts),
+      gulp
 
-  if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts);else gulp = require('gulp-help')(gulpIn);
+  if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
+  else gulp = require('gulp-help')(gulpIn)
 
   if (pkg.scripts) {
     if (o.test && pkg.scripts.test) {
-      (function () {
-        var test = require('gulp-npm-test')(gulp, o.test);
+      let test = require('gulp-npm-test')(gulp, o.test)
 
-        if (o.testWatch) {
-          gulp.task('test:watch', o.testWatch.toString(), function () {
-            require('gulp-watch')(o.testWatch, test);
-          });
-        }
-      })();
+      if (o.testWatch) {
+        gulp.task('test:watch', o.testWatch.toString(), function() {
+          require('gulp-watch')(o.testWatch, test)
+        })
+      }
     }
 
     if (o.buildWatch && o.scripts) {
-      gulp.task(o.build + ':watch', o.buildWatch.toString(), function () {
-        gulp.watch(o.buildWatch, [o.build]);
-      });
+      gulp.task(o.build + ':watch', o.buildWatch.toString(), function() {
+        gulp.watch(o.buildWatch, [o.build])
+      })
     }
   }
 
-  if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp);
+  if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
 
-  return gulp;
-};
-
-//# sourceMappingURL=data:application/json;base64,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S0FBSyxDQUFDLENBQUMsQ0FBQyxVQUFVLEVBQUUsQ0FBQyxDQUFDLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FBQTtPQUNwQyxDQUFDLENBQUE7S0FDSDtHQUNGOztBQUVELE1BQUksQ0FBQyxDQUFDLFVBQVUsSUFBSSxDQUFDLENBQUMsVUFBVSxDQUFDLE1BQU0sRUFBRSxPQUFPLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxFQUFFLElBQUksQ0FBQyxDQUFBOztBQUVuRSxTQUFPLElBQUksQ0FBQTtDQUNaLENBQUEiLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VzQ29udGVudCI6WyIndXNlIHN0cmljdCdcbnJlcXVpcmUoJ3NvdXJjZS1tYXAtc3VwcG9ydCcpLmluc3RhbGwoKVxuXG52YXIgcGF0aCA9IHJlcXVpcmUoJ3BhdGgnKVxudmFyIHBrZyA9IHJlcXVpcmUocGF0aC5qb2luKHByb2Nlc3MuY3dkKCksICdwYWNrYWdlLmpzb24nKSlcbnZhciBzb3VyY2VnYXRlID0gcmVxdWlyZSgnc291cmNlZ2F0ZScpXG5cbmZ1bmN0aW9uIGRlZihvcHRzID0ge30pIHtcbiAgICBvcHRzLmRvdEJldmVyYWdlID0gb3B0cy5kb3RCZXZlcmFnZSB8fCBbXG4gICAgICAnbm9kZV9tb2R1bGVzL2JldmVyYWdlL25vZGVfbW9kdWxlcy9oYWwtcmMnLFxuICAgICAgJy4nXG4gICAgXVxuXG4gICAgbGV0IG8gPSBzb3VyY2VnYXRlKFt7XG4gICAgICBidWlsZDogJ2J1aWxkJyxcbiAgICAgIHNjcmlwdHM6IHtcbiAgICAgICAgZXhjbHVkZTogWyd0ZXN0J10sIC8vIGJlY2F1c2UgZ3VscC1ucG0tdGVzdCBkb2VzIHRlc3RpbmcgYmV0dGVyIHRoYW4gZ3VscC1ucG0tcnVuXG4gICAgICAgIHJlcXVpcmVTdHJpY3Q6IHRydWVcbiAgICAgIH0sXG4gICAgICB0ZXN0OiB7IC8vIE5PVEU6IHRlc3QgaXMgYWx3YXlzIGVuYWJsZWQgYmVjYXVzZSBvZiB0aGlzIGRlZmF1bHQgLS0gbm90IHNvIGdvb2QuLi5cbiAgICAgICAgdGVzdHNSZTogL1xcLnNwZWNcXC5jb2ZmZWUkLyAvLyBUT0RPOiBtb3ZlIHRvIC5iZXZlcmFnZSBhZnRlciBjaGFuZ2luZyBpdCB0byBhIGdsb2JcbiAgICAgIH1cbiAgICB9XS5jb25jYXQob3B0cy5kb3RCZXZlcmFnZS5tYXAocGF0aCA9PiBwYXRoICsgJy8uYmV2ZXJhZ2UnKSwgb3B0cykpXG5cbiAgICBpZiAoby5zY3JpcHRzLmluY2x1ZGUgJiYgby5zY3JpcHRzLmluY2x1ZGVbby5idWlsZF0pXG4gICAgICBvID0gc291cmNlZ2F0ZShbbywge3NjcmlwdHM6IHtyZXF1aXJlOiBbby5idWlsZF19fV0pXG5cbiAgICByZXR1cm4gb1xuICB9XG5cblxubW9kdWxlLmV4cG9ydHMgPSBmdW5jdGlvbihndWxwSW4sIG9wdHMpIHtcbiAgbGV0IG8gPSBkZWYob3B0cyksXG4gICAgICBndWxwXG5cbiAgaWYgKHBrZy5zY3JpcHRzICYmIG8uc2NyaXB0cykgZ3VscCA9IHJlcXVpcmUoJ2d1bHAtbnBtLXJ1bicpKGd1bHBJbiwgby5zY3JpcHRzKVxuICBlbHNlIGd1bHAgPSByZXF1aXJlKCdndWxwLWhlbHAnKShndWxwSW4pXG5cbiAgaWYgKHBrZy5zY3JpcHRzKSB7XG4gICAgaWYgKG8udGVzdCAmJiBwa2cuc2NyaXB0cy50ZXN0KSB7XG4gICAgICBsZXQgdGVzdCA9IHJlcXVpcmUoJ2d1bHAtbnBtLXRlc3QnKShndWxwLCBvLnRlc3QpXG5cbiAgICAgIGlmIChvLnRlc3RXYXRjaCkge1xuICAgICAgICBndWxwLnRhc2soJ3Rlc3Q6d2F0Y2gnLCBvLnRlc3RXYXRjaC50b1N0cmluZygpLCBmdW5jdGlvbigpIHtcbiAgICAgICAgICByZXF1aXJlKCdndWxwLXdhdGNoJykoby50ZXN0V2F0Y2gsIHRlc3QpXG4gICAgICAgIH0pXG4gICAgICB9XG4gICAgfVxuXG4gICAgaWYgKG8uYnVpbGRXYXRjaCAmJiBvLnNjcmlwdHMpIHtcbiAgICAgIGd1bHAudGFzayhvLmJ1aWxkICsgJzp3YXRjaCcsIG8uYnVpbGRXYXRjaC50b1N0cmluZygpLCBmdW5jdGlvbigpIHtcbiAgICAgICAgZ3VscC53YXRjaChvLmJ1aWxkV2F0Y2gsIFtvLmJ1aWxkXSlcbiAgICAgIH0pXG4gICAgfVxuICB9XG5cbiAgaWYgKG8uc291cmNlZ2F0ZSAmJiBvLnNvdXJjZWdhdGUubGVuZ3RoKSByZXF1aXJlKCdoYWwtcmMnKShvLCBndWxwKVxuXG4gIHJldHVybiBndWxwXG59XG4iXX0=
+  return gulp
+}

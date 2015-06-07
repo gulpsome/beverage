@@ -1,4 +1,4 @@
-var gulp = require('./index.js')(require('gulp'), {
+var gulp = require('./index.es5.js')(require('gulp'), {
   dotBeverage: [
     'node_modules/hal-rc',
     '.'

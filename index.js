@@ -1,9 +1,9 @@
-'use strict'
 require('source-map-support').install()
 
-var path = require('path')
-var pkg = require(path.join(process.cwd(), 'package.json'))
-var sourcegate = require('sourcegate')
+import path from 'path'
+import sourcegate from 'sourcegate'
+let pkg = require(path.join(process.cwd(), 'package.json'))
+
 
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
@@ -20,18 +20,19 @@ function def(opts = {}) {
       test: { // NOTE: test is always enabled because of this default -- not so good...
         testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
       }
-    }].concat(opts.dotBeverage.map(path => path + '/.beverage'), opts))
+    }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
 
-    if (o.scripts.include && o.scripts.include[o.build])
+    if (o.scripts.include && o.scripts.include[o.build]) {
       o = sourcegate([o, {scripts: {require: [o.build]}}])
+    }
 
     return o
   }
 
 
-module.exports = function(gulpIn, opts) {
-  let o = def(opts),
-      gulp
+export default function(gulpIn, opts) {
+  let o = def(opts)
+  let gulp
 
   if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
   else gulp = require('gulp-help')(gulpIn)
@@ -41,16 +42,16 @@ module.exports = function(gulpIn, opts) {
       let test = require('gulp-npm-test')(gulp, o.test)
 
       if (o.testWatch) {
-        gulp.task('test:watch', o.testWatch.toString(), function() {
+        gulp.task('test:watch', o.testWatch.toString(), () =>
           require('gulp-watch')(o.testWatch, test)
-        })
+        )
       }
     }
 
     if (o.buildWatch && o.scripts) {
-      gulp.task(o.build + ':watch', o.buildWatch.toString(), function() {
+      gulp.task(o.build + ':watch', o.buildWatch.toString(), () =>
         gulp.watch(o.buildWatch, [o.build])
-      })
+      )
     }
   }
 

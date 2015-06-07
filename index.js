@@ -1,7 +1,7 @@
 require('source-map-support').install()
 
-import path from 'path'
 import sourcegate from 'sourcegate'
+import path from 'path'
 import harp from 'harp'
 import sync from 'browser-sync'
 let reload = sync.reload

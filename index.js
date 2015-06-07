@@ -1,12 +1,12 @@
 require('source-map-support').install()
 
+import {pollen} from 'stamina'
 import sourcegate from 'sourcegate'
 import path from 'path'
 import harp from 'harp'
 import sync from 'browser-sync'
 let reload = sync.reload
 let pkg = require(path.join(process.cwd(), 'package.json'))
-
 
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
@@ -59,22 +59,29 @@ export default function(gulpIn, opts) {
   }
 
   if (o.harp) {
-    gulp.task(o.harp.name || 'harp', o.harp.help || 'Harp server', () => {
-      harp.server(o.harp.path || process.cwd(), {
-        port: o.harp.port || 9000
+    // infer the pollen wanted
+    let anthers = ['harp']
+    if (o.harp.sync) anthers.push('harp-sync')
+    anthers.push({harp: o.harp})
+    // harp options
+    let ho = pollen(anthers).harp
+
+    gulp.task(ho.name, ho.help, () => {
+      harp.server(ho.path || process.cwd(), {
+        port: ho.port
       }, () => {
-        if (o.harp.sync) {
-          sync(o.harp.sync.options || {})
-          if (o.harp.sync.reload) {
-            if (o.harp.sync.stream) {
+        if (ho.sync) {
+          sync(ho.sync.options)
+          if (ho.sync.reload) {
+            if (ho.sync.stream) {
               // streaming changes
-              gulp.watch(o.harp.sync.stream).on('change', (file) => {
+              gulp.watch(ho.sync.stream).on('change', (file) => {
                 reload(file.path, {stream: true})
               })
             }
             // reload non-streaming (appended exclusions)
-            let nonStreaming = o.harp.sync.reload.concat(
-              o.harp.sync.stream.map(streamed => '!' + streamed + '+(|.map)')
+            let nonStreaming = ho.sync.reload.concat(
+              ho.sync.stream.map(streamed => '!' + streamed + '+(|.map)')
             )
             gulp.watch(nonStreaming, () => {
               reload()

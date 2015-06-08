@@ -40,6 +40,11 @@ export default function(gulpIn, opts) {
   if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
   else gulp = require('gulp-help')(gulpIn)
 
+  gulp.task('beverage', 'The recipe of this beverage.', () => {
+    console.log('\nCurrent beverage options:')
+    console.log('\n' + JSON.stringify(o, null, 2) + '\n')
+  })
+
   if (pkg.scripts) {
     if (o.test && pkg.scripts.test) {
       let test = require('gulp-npm-test')(gulp, o.test)

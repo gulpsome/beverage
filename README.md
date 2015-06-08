@@ -68,6 +68,7 @@ Usage
   gulp [task]
 
 Available tasks
+  beverage          The recipe of this beverage.
   build             sourcegates.js
   build:watch       sourcegates.coffee
   dev               DEVELOP
@@ -85,6 +86,8 @@ gulp.task('dev', 'DEVELOP', ['build', 'sourcegate:watch', 'build:watch', 'test:w
 ```
 
 Credits to [gulp-help](https://www.npmjs.com/package/gulp-help).
+
+See the current beverage configuration options with `gulp beverage`.
 
 Hope this helps.
 

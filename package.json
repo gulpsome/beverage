@@ -15,8 +15,12 @@
   },
   "author": "Orlin M Bozhinov <om@soundsapiens.com>",
   "main": "index.es5",
+  "bin": {
+    "beverage": "cli.js"
+  },
   "dependencies": {
     "browser-sync": "^2.7.6",
+    "gulp": "^3.9.0",
     "gulp-help": "^1.6.0",
     "gulp-npm-run": "0.0.0-5",
     "gulp-npm-test": "0.0.0-6",

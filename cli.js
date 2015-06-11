@@ -2,6 +2,7 @@
 
 'use strict'
 
+var R = require('ramda')
 var fs = require('fs')
 var path = require('path')
 var gulp = [
@@ -10,9 +11,19 @@ var gulp = [
   path.normalize(process.cwd() + '/node_modules/beverage/node_modules/gulp/bin/gulp.js')
 ]
 var found = false
+var argv = require('minimist')(process.argv.slice(2))
+var beverage = argv.o || argv.options
+var tasks = argv._
 
-// this is a silent gulp
-process.argv.push('--silent')
+if (beverage ||
+    tasks.length === 0 ||
+    R.contains('beverage', tasks) ||
+    R.contains('help', tasks)) {
+  // this is a silent gulp
+  process.argv.push('--silent')
+  // TODO: insert beverage before --options to make gulp happy
+  // if (beverage && ! R.contains('beverage', tasks)) process.argv.push('beverage')
+}
 
 gulp.forEach(function(file) {
   try {

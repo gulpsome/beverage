@@ -19,7 +19,7 @@ var argv = yargs
   .argv
 var tasks = argv._
 var beverage = argv.o || R.contains('beverage', tasks)
-var help = argv.h || R.contains('help', tasks)
+var help = argv.h || R.contains('help', tasks) || R.empty(tasks)
 
 // *non-beverage-options*
 // these will be filtered - not passed on to gulp
@@ -47,7 +47,7 @@ gulp.forEach(function(file) {
       require(file) // delegate to gulp
       found = true // break (as if)
       if (argv.h) console.log(
-          '\n' +
+          '\nbeverage\nbeverage #gulp help\n' +
           yargs.help() +
           '\nRunning `gulp ' +
           process.argv.slice(2).join(' ') +

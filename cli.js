@@ -13,13 +13,13 @@ var gulp = [
 var found = false
 var yargs = require('yargs')
 var argv = yargs
-  .usage('beverage [gulp tasks]')
+  .usage('beverage [gulp-tasks]')
   .option('h', {alias: ['help', '?'], type: 'boolean', description: 'show beverage help + `gulp help --silent`'})
   .option('o', {alias: 'options', type: 'boolean', description: 'same as `gulp beverage --silent`'})
   .argv
 var tasks = argv._
 var beverage = argv.o || R.contains('beverage', tasks)
-var help = argv.h || R.contains('help', tasks) || R.empty(tasks)
+var help = argv.h || R.contains('help', tasks) || R.isEmpty(tasks)
 
 // *non-beverage-options*
 // these will be filtered - not passed on to gulp
@@ -47,7 +47,7 @@ gulp.forEach(function(file) {
       require(file) // delegate to gulp
       found = true // break (as if)
       if (argv.h) console.log(
-          '\nbeverage\nbeverage #gulp help\n' +
+          '\n' +
           yargs.help() +
           '\nRunning `gulp ' +
           process.argv.slice(2).join(' ') +

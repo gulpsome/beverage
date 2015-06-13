@@ -1,6 +1,7 @@
 require('source-map-support').install()
 
-import {pollen} from 'stamina'
+import R from 'ramda'
+import {pollinateHarp} from 'stamina'
 import sourcegate from 'sourcegate'
 import path from 'path'
 import harp from 'harp'
@@ -64,12 +65,7 @@ export default function(gulpIn, opts) {
   }
 
   if (o.harp) {
-    // infer the pollen wanted
-    let anthers = ['harp']
-    if (o.harp.sync) anthers.push('harp-sync')
-    anthers.push({harp: o.harp})
-    // harp options
-    let ho = pollen(anthers).harp
+    let ho = pollinateHarp(R.pick(['harp'], o)).harp
 
     gulp.task(ho.name, ho.help, () => {
       harp.server(ho.path || process.cwd(), {

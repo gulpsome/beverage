@@ -1,12 +1,11 @@
 {
   "test": {},
-  "buildWatch": ["index.es6"],
+  "buildWatch": ["index.js"],
   "sourcegatePreset": "airbnb",
   "sourcegateModule": "hal-rc",
   "sourcegate": [
-    {"recipe": "jscs"},
-    {"recipe": "jshint", "sources": {
-      "esnext": true
-    }}
+    {"recipe": "eslint"},
+    {"recipe": "jshint"},
+    {"recipe": "jscs"}
   ]
 }

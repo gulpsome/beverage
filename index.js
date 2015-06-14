@@ -3,7 +3,7 @@ require('source-map-support').install()
 import R from 'ramda'
 import sourcegate from 'sourcegate'
 import path from 'path'
-let pkg = require(path.join(process.cwd(), 'package.json'))
+import {pkg} from 'stamina'
 
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [

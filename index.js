@@ -3,7 +3,7 @@ require('source-map-support').install()
 import R from 'ramda'
 import sourcegate from 'sourcegate'
 import path from 'path'
-let pkg = require(path.join(process.cwd(), 'package.json'))
+import {pkg, gulpHelpify} from 'stamina'
 
 function def(opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
@@ -32,10 +32,9 @@ function def(opts = {}) {
 
 export default function(gulpIn, opts) {
   let o = def(opts)
-  let gulp
+  let gulp = gulpHelpify(gulpIn)
 
-  if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
-  else gulp = require('gulp-help')(gulpIn)
+  if (pkg.scripts && o.scripts) require('gulp-npm-run')(gulpIn, o.scripts)
 
   gulp.task('beverage', 'The recipe of this beverage.', () => {
     console.log('\nCurrent beverage options:')

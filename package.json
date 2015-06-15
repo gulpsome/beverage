@@ -21,7 +21,6 @@
   "dependencies": {
     "gulp": "^3.9.0",
     "gulp-harp": "0.0.1",
-    "gulp-help": "^1.6.0",
     "gulp-npm-run": "0.0.0-5",
     "gulp-npm-test": "0.0.0-6",
     "gulp-watch": "^4.2.4",

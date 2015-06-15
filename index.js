@@ -32,10 +32,9 @@ function def(opts = {}) {
 
 export default function(gulpIn, opts) {
   let o = def(opts)
-  let gulp
+  let gulp = gulpHelpify(gulpIn)
 
-  if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
-  else gulp = gulpHelpify(gulpIn)
+  if (pkg.scripts && o.scripts) require('gulp-npm-run')(gulpIn, o.scripts)
 
   gulp.task('beverage', 'The recipe of this beverage.', () => {
     console.log('\nCurrent beverage options:')

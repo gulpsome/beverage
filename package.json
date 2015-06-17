@@ -24,7 +24,7 @@
     "gulp-npm-run": "0.0.1",
     "gulp-npm-test": "0.0.1",
     "gulp-watch": "^4.2.4",
-    "hal-rc": "0.0.5",
+    "hal-rc": "0.0.5-1",
     "ramda": "^0.15.0",
     "source-map-support": "^0.3.1",
     "sourcegate": "^0.1.3",

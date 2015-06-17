@@ -1,7 +1,3 @@
-#!/usr/bin/env node
-
-'use strict'
-
 var R = require('ramda')
 var fs = require('fs')
 var path = require('path')

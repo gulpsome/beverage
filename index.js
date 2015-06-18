@@ -2,10 +2,9 @@ require('source-map-support').install()
 
 import R from 'ramda'
 import sourcegate from 'sourcegate'
-import path from 'path'
 import {pkg, gulpHelpify} from 'stamina'
 
-function def(opts = {}) {
+function def (opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
       'node_modules/beverage/node_modules/hal-rc',
       '.'
@@ -29,8 +28,7 @@ function def(opts = {}) {
     return o
   }
 
-
-export default function(gulpIn, opts) {
+export default function (gulpIn, opts) {
   let o = def(opts)
   let gulp = gulpHelpify(gulpIn)
 

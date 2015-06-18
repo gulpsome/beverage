@@ -39,16 +39,17 @@ for (let file of gulp) {
   try {
     require(file) // delegate to gulp
     found = true
-    if (argv.h) console.log(
+    if (argv.h) {
+      console.log(
         '\n' +
         yargs.help() +
         '\nRunning `gulp ' +
         process.argv.slice(2).join(' ') +
         '` now...'
       )
+    }
     break
-  }
-  catch (e) {}
+  } catch (e) {}
 }
 
 if (!found) {

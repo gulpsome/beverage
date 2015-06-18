@@ -1,5 +1,9 @@
 {
   "test": {},
   "buildWatch": ["index.js"],
-  "sourcegate": [{"recipe": "eslint", "module": "hal-rc", "preset": "airbnb"}]
+  "sourcegate": [{
+    "recipe": "eslint",
+    "module": "hal-rc",
+    "sources": {"extends": ["standard"]}
+  }]
 }

@@ -16,9 +16,10 @@
   "author": "Orlin M Bozhinov <om@soundsapiens.com>",
   "main": "index.es5",
   "bin": {
-    "beverage": "cli.js"
+    "beverage": "cli.es5.js"
   },
   "dependencies": {
+    "babel": "^5.5.8",
     "gulp": "^3.9.0",
     "gulp-harp": "0.0.1",
     "gulp-npm-run": "0.0.1",
@@ -32,15 +33,12 @@
     "yargs": "^3.11.0"
   },
   "devDependencies": {
-    "babel": "^5.5.8",
     "babel-eslint": "^3.1.15",
     "eslint": "^0.23.0",
-    "gulp": "^3.9.0",
-    "jscs": "^1.13.1",
-    "jshint": "^2.8.0"
+    "gulp": "^3.9.0"
   },
   "scripts": {
-    "build": "node_modules/.bin/babel index.js -o index.es5 --source-maps inline --loose es6.modules",
+    "build": "node_modules/.bin/babel index.js -o index.es5.js --source-maps inline --loose es6.modules",
     "build:watch": "npm run build -- -w",
     "test": "node_modules/.bin/gulp"
   },

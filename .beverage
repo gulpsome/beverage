@@ -1,9 +1,9 @@
 {
   "test": {},
-  "buildWatch": ["index.js"],
   "sourcegate": [{
     "recipe": "eslint",
     "module": "hal-rc",
     "sources": {"extends": ["standard"]}
-  }]
+  }],
+  "causality": {"build": ["index.js"]}
 }

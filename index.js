@@ -11,6 +11,7 @@ function def (opts = {}) {
     ]
 
     let o = sourcegate([{
+      causality: {},
       build: 'build',
       scripts: {
         exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
@@ -50,11 +51,22 @@ export default function (gulpIn, opts) {
       }
     }
 
+    // TODO: the following should be deleted as it's redundant
     if (o.buildWatch && o.scripts) {
+      console.warn('The build & buildWatch options are deprecated...')
+      console.warn('Please use "causality" instead.\n')
       gulp.task(o.build + ':watch', o.buildWatch.toString(), () =>
         gulp.watch(o.buildWatch, [o.build])
       )
     }
+  }
+
+  for (let task in o.causality) {
+    let cause = o.causality[task]
+    // TODO: require the task to already exist?
+    gulp.task(task + ':watch', cause.toString(), () =>
+      gulp.watch(o.buildWatch, cause)
+    )
   }
 
   if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))

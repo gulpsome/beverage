@@ -61,30 +61,11 @@ export default function (gulpIn, opts) {
     }
   }
 
-  for (let task in o.causality) {
-    let cause = o.causality[task]
-    switch (R.type(cause)) {
-      case 'String':
-        if (gulp.tasks[cause]) {
-          gulp.task(task, `Alias for '${cause}'.`, [cause])
-        }
-        break
-      case 'Array':
-        if (gulp.tasks[task]) {
-          // a shorthand for files triggering an existing task - creates task:watch
-          gulp.task(task + ':watch', cause.toString(), () =>
-            gulp.watch(o.buildWatch, cause)
-          )
-        }
-        break
-      default:
-        console.warn(`Causeless ${task}: ${cause.toString()}`)
-    }
-  }
-
   if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))
 
   if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
+
+  if (R.keys(o.causality).length) require('gulp-cause')(gulp, o.causality)
 
   return gulp
 }

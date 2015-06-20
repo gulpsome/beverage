@@ -63,10 +63,14 @@ export default function (gulpIn, opts) {
 
   for (let task in o.causality) {
     let cause = o.causality[task]
-    // TODO: require the task to already exist?
-    gulp.task(task + ':watch', cause.toString(), () =>
-      gulp.watch(o.buildWatch, cause)
-    )
+    if (R.type(cause) === 'Array') {
+      if (gulp.tasks[task]) {
+        // a shorthand for files triggering an existing task - creates task:watch
+        gulp.task(task + ':watch', cause.toString(), () =>
+          gulp.watch(o.buildWatch, cause)
+        )
+      }
+    }
   }
 
   if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))

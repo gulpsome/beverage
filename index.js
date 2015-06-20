@@ -61,17 +61,11 @@ export default function (gulpIn, opts) {
     }
   }
 
-  for (let task in o.causality) {
-    let cause = o.causality[task]
-    // TODO: require the task to already exist?
-    gulp.task(task + ':watch', cause.toString(), () =>
-      gulp.watch(o.buildWatch, cause)
-    )
-  }
-
   if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))
 
   if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
+
+  if (R.keys(o.causality).length) require('gulp-cause')(gulp, o.causality)
 
   return gulp
 }

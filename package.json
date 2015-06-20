@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "babel": "^5.5.8",
-    "eslint-config-standard": "^3.3.0",
     "gulp": "^3.9.0",
+    "gulp-cause": "0.0.1",
     "gulp-harp": "0.0.1",
     "gulp-npm-run": "0.0.1",
     "gulp-npm-test": "0.0.1",
@@ -36,6 +36,7 @@
   "devDependencies": {
     "babel-eslint": "^3.1.15",
     "eslint": "^0.23.0",
+    "eslint-config-standard": "^3.3.0",
     "gulp": "^3.9.0"
   },
   "scripts": {

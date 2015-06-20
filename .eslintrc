@@ -1,4 +1,7 @@
 {
+  "extends": [
+    "standard"
+  ],
   "env": {
     "node": true
   },
@@ -13,8 +16,5 @@
       "single",
       "avoid-escape"
     ]
-  },
-  "extends": [
-    "standard"
-  ]
+  }
 }

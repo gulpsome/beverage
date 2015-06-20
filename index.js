@@ -63,13 +63,22 @@ export default function (gulpIn, opts) {
 
   for (let task in o.causality) {
     let cause = o.causality[task]
-    if (R.type(cause) === 'Array') {
-      if (gulp.tasks[task]) {
-        // a shorthand for files triggering an existing task - creates task:watch
-        gulp.task(task + ':watch', cause.toString(), () =>
-          gulp.watch(o.buildWatch, cause)
-        )
-      }
+    switch (R.type(cause)) {
+      case 'String':
+        if (gulp.tasks[cause]) {
+          gulp.task(task, `Alias for '${cause}'.`, [cause])
+        }
+        break
+      case 'Array':
+        if (gulp.tasks[task]) {
+          // a shorthand for files triggering an existing task - creates task:watch
+          gulp.task(task + ':watch', cause.toString(), () =>
+            gulp.watch(o.buildWatch, cause)
+          )
+        }
+        break
+      default:
+        console.warn(`Causeless ${task}: ${cause.toString()}`)
     }
   }
 

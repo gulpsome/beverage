@@ -5,5 +5,5 @@
     "module": "hal-rc",
     "sources": {"extends": ["standard"]}
   }],
-  "causality": {"build": ["index.js"]}
+  "causality": ["build", ["index.js"]]
 }

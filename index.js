@@ -11,13 +11,13 @@ function def (opts = {}) {
     ]
 
     let o = sourcegate([{
-      causality: {},
+      causality: [],
       build: 'build',
       scripts: {
         exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
         requireStrict: true
       },
-      test: { // NOTE: test is always enabled because of this default -- not so good...
+      test: {
         testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
       }
     }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
@@ -33,26 +33,25 @@ export default function (gulpIn, opts) {
   let o = def(opts)
   let gulp = gulpHelpify(gulpIn)
 
-  if (pkg.scripts && o.scripts) require('gulp-npm-run')(gulpIn, o.scripts)
-
   gulp.task('beverage', 'The recipe of this beverage.', () => {
     console.log('\nCurrent beverage options:')
     console.log('\n' + JSON.stringify(o, null, 2) + '\n')
   })
 
   if (pkg.scripts) {
-    if (o.test && pkg.scripts.test) {
-      let test = require('gulp-npm-test')(gulp, o.test)
+    if (o.scripts) require('gulp-npm-run')(gulp, o.scripts)
 
+    if (o.test && pkg.scripts.test) {
       if (o.testWatch) {
-        gulp.task('test:watch', o.testWatch.toString(), () =>
-          require('gulp-watch')(o.testWatch, test)
-        )
+        // TODO: this whole if should be deleted
+        // console.warn('Option testWatch is deprecated, please use test.watch instead.')
+        o.test.watch = o.testWatch
       }
+      require('gulp-npm-test')(gulp, o.test)
     }
 
-    // TODO: the following should be deleted as it's redundant
     if (o.buildWatch && o.scripts) {
+      // TODO: this whole if should be deleted as it's redundant
       console.warn('The build & buildWatch options are deprecated...')
       console.warn('Please use "causality" instead.\n')
       gulp.task(o.build + ':watch', o.buildWatch.toString(), () =>

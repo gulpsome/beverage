@@ -44,7 +44,7 @@ export default function (gulpIn, opts) {
     if (o.test && pkg.scripts.test) {
       if (o.testWatch) {
         // TODO: this whole if should be deleted
-        // console.warn('Option testWatch is deprecated, please use test.watch instead.')
+        console.warn('Option testWatch is deprecated, please use test.watch instead.')
         o.test.watch = o.testWatch
       }
       require('gulp-npm-test')(gulp, o.test)

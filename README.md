@@ -44,7 +44,7 @@ require(‘beverage’)(require(‘gulp’))
 It will not do anything unless given some options:
 
 - `dotBeverage: []` contains the relative paths where beverage will look for `.beverage` configuration files - the default is `[‘node_modules/beverage/node_modules/hal-rc’, ’.’]` - this is the only option one would have to override via `gulpfile.js`
-- `causality: {}` - add declarative tasks via [gulp-cause](https://github.com/orlin/gulp-cause)
+- `causality: []` - add declarative tasks via [gulp-cause](https://github.com/orlin/gulp-cause)
 - `harp: {}` - web server and browser-sync via [gulp-harp](https://github.com/orlin/gulp-harp)
 - `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for full configuration options, notice `testsRe` makes testing more efficient, if the next option is used
 - `testWatch: []` handed to `gulp-watch`, give it some file paths / globs, runs the tests on change

@@ -7,6 +7,5 @@ var gulp = require('./index.es5')(require('gulp'), {
 
 gulp.task('dev', 'DEVELOP', [
   'build',
-  'sourcegate:watch',
   'build:watch'
 ])

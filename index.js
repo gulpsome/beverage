@@ -11,7 +11,6 @@ function def (opts = {}) {
     ]
 
     let o = sourcegate([{
-      causality: [],
       build: 'build',
       scripts: {
         exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
@@ -64,7 +63,7 @@ export default function (gulpIn, opts) {
 
   if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
 
-  if (R.keys(o.causality).length) require('gulp-cause')(gulp, o.causality)
+  if (o.causality) require('gulp-cause')(gulp, o.causality)
 
   return gulp
 }

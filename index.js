@@ -59,9 +59,27 @@ export default function (gulpIn, opts) {
     }
   }
 
-  if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))
+  if (o.sourcegate && o.sourcegate.length) {
+    o.sourceopt = o.sourceopt || {}
+    // TODO: the rest of this as far as the require is temporary, for graceful upgrade...
+    // delete afterwards
+    let convert = {'sourcegateModule': 'module',
+                   'sourcegatePrefix': 'prefix',
+                   'sourcegatePreset': 'preset',
+                   'sourcegateWatch': 'watch'}
+    if (R.keys(R.pick(R.keys(convert), o)).length) {
+      for (let key of R.keys(convert)) {
+        if (o[key]) {
+          let val = convert[key]
+          o.sourceopt[val] = o[key]
+          console.warn(`Deprecated ${key} option, please use sourceopt.${val} instead.`)
+        }
+      }
+    }
+    require('hal-rc')(R.pick(['sourcegate', 'sourceopt'], o), gulp)
+  }
 
-  if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
+  if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))
 
   if (o.causality) require('gulp-cause')(gulp, o.causality)
 

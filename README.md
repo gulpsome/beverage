@@ -4,8 +4,10 @@ The DRYest gulp for the thirsty.
 
 ## Why
 
-Because even with [gulp-npm-run](https://github.com/orlin/gulp-npm-run),
+Because even with:
+[gulp-npm-run](https://github.com/orlin/gulp-npm-run),
 [gulp-npm-test](https://github.com/orlin/gulp-npm-test),
+[gulp-cause](https://github.com/orlin/gulp-cause),
 [sourcegate](https://github.com/orlin/sourcegate),
 and [hal-rc](https://github.com/orlin/hal-rc) -
 I'd still do a lot of copy-pasting between gulpfiles.
@@ -15,10 +17,13 @@ I'd still do a lot of copy-pasting between gulpfiles.
 There is almost always `test` + `test:watch`,
 and often some kind of `build` + `build:watch` tasks,
 and some linter / hinter config, that could be common /
-similar across projects.
+similar across projects, as well as a `dev` task that
+runs the above and perhaps some other tasks in parallel...
 
 All of the above are optional, but there would be no use of beverage
-if none are enabled, or configured.
+if none of the projects listed are enabled, or configured.
+
+Beverage is all about improving your `gulp` experience with little to no effort.
 
 ## Use
 
@@ -33,7 +38,7 @@ var gulp = require('beverage')(require('gulp'), {
 // use gulp as you would otherise
 ```
 
-Or, even simpler, if beverage fulfils all your gulp task needs, you could load options from a `.beverage` file with just the following line in `gulpfile.js` to set gulp up:
+Or, even simpler, if beverage fulfills all your gulp task needs, you could load options from a `.beverage` file with just the following line in `gulpfile.js` to set gulp up:
 
 ```javascript
 require(‘beverage’)(require(‘gulp’))
@@ -44,19 +49,20 @@ require(‘beverage’)(require(‘gulp’))
 It will not do anything unless given some options:
 
 - `dotBeverage: []` contains the relative paths where beverage will look for `.beverage` configuration files - the default is `[‘node_modules/beverage/node_modules/hal-rc’, ’.’]` - this is the only option one would have to override via `gulpfile.js`
-- `causality: []` - add declarative tasks via [gulp-cause](https://github.com/orlin/gulp-cause)
-- `harp: {}` - web server and browser-sync via [gulp-harp](https://github.com/orlin/gulp-harp)
-- `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for full configuration options, notice `testsRe` makes testing more efficient, if the next option is used
-- `testWatch: []` handed to `gulp-watch`, give it some file paths / globs, runs the tests on change
-- `scripts: {include: {build: "Builds me something"}}` will setup the script / task, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for full configuration options; just like `test`, if there is no `scripts: {}`, at least, gulp-npm-run won't be used and there can't be a `build:watch` task either, the test script is excluded by default in favor of gulp-npm-test use, described earlier
-- `sourcegate*` quite a number of options, handled by hal-rc, [where they are documented](https://github.com/orlin/hal-rc#configure)...
+- `causality: []` add declarative tasks via [gulp-cause](https://github.com/orlin/gulp-cause)
+- `harp: {}` web server and browser-sync via [gulp-harp](https://github.com/orlin/gulp-harp)
+- `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for configuration options
+- `scripts: {}` makes gulp tasks for all your `package.json` scripts, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for optional configuration, the test script / task is better with `gulp-npm-test` which is automatically favored
+- `sourcegate` & `sourceopt`, the latter is optional, both handled by [hal-rc, where they are documented](https://github.com/orlin/hal-rc#configure)
 
 ### Help
 
 To see what tasks beverage has created:
 
 ```sh
-gulp help #or just $ gulp
+gulp help
+# or gulp
+# or beverage
 ```
 
 Help is the default `gulp` task.  Create a `’default’` task to change that.
@@ -82,12 +88,12 @@ Available tasks
 For which, I only had to add a `dev` task:
 
 ```javascript
-gulp.task('dev', 'DEVELOP', ['build', 'sourcegate:watch', 'build:watch', 'test:watch'])
+gulp.task('dev', 'DEVELOP', ['build', 'build:watch', 'test:watch'])
 ```
 
 Credits to [gulp-help](https://www.npmjs.com/package/gulp-help).
 
-See the current beverage configuration options with `gulp beverage`.
+See the current beverage configuration options with `beverage -o` or `gulp beverage`.
 
 Hope this helps.
 
@@ -95,7 +101,7 @@ Hope this helps.
 
 Beverage options are deep-merged in the following order of sources:
 
-1. `index.es6` - look at the `def` function (it has a few defaults)
+1. `index.js` - look at the `def` function (it has a few defaults)
 2. `./node_modules/beverage/node_modules/hal-rc/.beverage` - where I keep my preferred beverage defaults
 3. `./.beverage` - your project options via a configuration file
 4. `gulpfile.js` - your project options via javascript code

@@ -1,8 +1,21 @@
 require('source-map-support').install()
 
 import R from 'ramda'
+import path from 'path'
 import sourcegate from 'sourcegate'
 import {pkg, gulpHelpify} from 'stamina'
+
+function req (name) {
+  let dep = R.has(name)
+  let local = dep(pkg.dependencies) || dep(pkg.devDependencies)
+  if (local) {
+    let where = path.normalize(`${process.cwd()}/node_modules/${name}`)
+    return require(path.join(where, require(path.join(where, 'package.json')).main))
+  } else {
+    console.warn(`Package ${name} not found as local dependency, fallback to beverage.`)
+    return require(name)
+  }
+}
 
 function def (opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
@@ -38,7 +51,7 @@ export default function (gulpIn, opts) {
   })
 
   if (pkg.scripts) {
-    if (o.scripts) require('gulp-npm-run')(gulp, o.scripts)
+    if (o.scripts) req('gulp-npm-run')(gulp, o.scripts)
 
     if (o.test && pkg.scripts.test) {
       if (o.testWatch) {
@@ -46,7 +59,7 @@ export default function (gulpIn, opts) {
         console.warn('Option testWatch is deprecated, please use test.watch instead.')
         o.test.watch = o.testWatch
       }
-      require('gulp-npm-test')(gulp, o.test)
+      req('gulp-npm-test')(gulp, o.test)
     }
 
     if (o.buildWatch && o.scripts) {
@@ -61,7 +74,7 @@ export default function (gulpIn, opts) {
 
   if (o.sourcegate && o.sourcegate.length) {
     o.sourceopt = o.sourceopt || {}
-    // TODO: the rest of this as far as the require is temporary, for graceful upgrade...
+    // TODO: the rest of this as far as the req is temporary, for graceful upgrade...
     // delete afterwards
     let convert = {'sourcegateModule': 'module',
                    'sourcegatePrefix': 'prefix',
@@ -76,12 +89,12 @@ export default function (gulpIn, opts) {
         }
       }
     }
-    require('hal-rc')(R.pick(['sourcegate', 'sourceopt'], o), gulp)
+    req('hal-rc')(R.pick(['sourcegate', 'sourceopt'], o), gulp)
   }
 
-  if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))
+  if (o.harp) req('gulp-harp')(gulp, R.pick(['harp'], o))
 
-  if (o.causality) require('gulp-cause')(gulp, o.causality)
+  if (o.causality) req('gulp-cause')(gulp, o.causality)
 
   return gulp
 }

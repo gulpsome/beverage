@@ -7,7 +7,7 @@ import {pkg, gulpHelpify} from 'stamina'
 
 function req (name) {
   let dep = R.has(name)
-  let local = dep(pkg.dependencies) || dep(pkg.devDependencies)
+  let local = dep(pkg.dependencies || {}) || dep(pkg.devDependencies || {})
   if (local) {
     let where = path.normalize(`${process.cwd()}/node_modules/${name}`)
     return require(path.join(where, require(path.join(where, 'package.json')).main))

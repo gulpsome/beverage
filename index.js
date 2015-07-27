@@ -3,7 +3,7 @@ require('source-map-support').install()
 import R from 'ramda'
 import path from 'path'
 import sourcegate from 'sourcegate'
-import {pkg, gulpHelpify} from 'stamina'
+import {pkg, gulpHelpify} from 'be-goods'
 import chalk from 'chalk'
 
 var logger = require('tracer').console({

@@ -18,7 +18,7 @@ function req (name) {
     let where = path.normalize(`${process.cwd()}/node_modules/${name}`)
     return require(path.join(where, require(path.join(where, 'package.json')).main))
   } else {
-    console.warn(chalk.yellow(`Please install ${name} as a dependency, future beverage will not buldle it.`))
+    console.warn(chalk.yellow(`Please install ${name} as a devDependency, future beverage will not buldle it.`))
     return require(name)
   }
 }

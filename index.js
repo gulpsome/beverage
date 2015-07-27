@@ -18,7 +18,10 @@ function req (name) {
     let where = path.normalize(`${process.cwd()}/node_modules/${name}`)
     return require(path.join(where, require(path.join(where, 'package.json')).main))
   } else {
-    console.warn(chalk.yellow(`Please install ${name} as a devDependency, future beverage will not buldle it.`))
+    if (R.not(R.contains(name, ['hal-rc', 'gulp-cause']))) {
+      // the above list of exceptions contains modules that will remain bundled as beverage dependencies
+      console.warn(chalk.yellow(`Please install ${name} as a devDependency, future beverage will not buldle it.`))
+    }
     return require(name)
   }
 }

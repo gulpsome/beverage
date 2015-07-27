@@ -4,8 +4,10 @@ import R from 'ramda'
 import path from 'path'
 import sourcegate from 'sourcegate'
 import {pkg, gulpHelpify} from 'stamina'
+import chalk from 'chalk'
 
 var logger = require('tracer').console({
+  'filters': {'warn': chalk.yellow, 'error': chalk.red},
   'format': '<beverage/{{file}}:{{line}}> {{message}}'
 })
 
@@ -60,7 +62,7 @@ export default function (gulpIn, opts) {
     if (o.test && pkg.scripts.test) {
       if (o.testWatch) {
         // TODO: this whole if should be deleted
-        logger.warn('Option testWatch is deprecated, please use test.watch instead.')
+        logger.warn('Option testWatch is deprecated, use test.watch instead.')
         o.test.watch = o.testWatch
       }
       req('gulp-npm-test')(gulp, o.test)
@@ -68,7 +70,7 @@ export default function (gulpIn, opts) {
 
     if (o.buildWatch && o.scripts) {
       // TODO: this whole if should be deleted as it's redundant
-      logger.warn('The build & buildWatch options are deprecated, use "causality" instead.')
+      logger.warn('The build & buildWatch options are deprecated, use causality instead.')
       gulp.task(o.build + ':watch', o.buildWatch.toString(), () =>
         gulp.watch(o.buildWatch, [o.build])
       )
@@ -88,7 +90,7 @@ export default function (gulpIn, opts) {
         if (o[key]) {
           let val = convert[key]
           o.sourceopt[val] = o[key]
-          logger.warn(`Deprecated ${key} option, please use sourceopt.${val} instead.`)
+          logger.warn(`Deprecated ${key} option, use sourceopt.${val} instead.`)
         }
       }
     }

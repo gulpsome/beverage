@@ -29,7 +29,7 @@ Beverage is all about improving your `gulp` experience with little to no effort.
 
 Here is a diagram of dependencies / modules that `beverage` makes more convenient to use.
 
-[![Follow the link for more info.](doc/Beverage.jpg)](doc)
+[![](doc/Beverage.jpg "follow the link for more info")](doc)
 
 ## Use
 

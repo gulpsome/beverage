@@ -9,4 +9,6 @@ Here is the rationale / legend of the diagram:
 - the thinner-framed `sourcegate` & `childish-process` are tested with `gulp-npm-run`
 - `batshit` (`bats`) is used for testing `gulp-npm-run` and `gulp-npm-test`
 
-[![](Beverage.jpg)](doc#readme)
+[![](Beverage.jpg)](#readme)
+
+This was created with [Grafio](http://tentouchapps.com/grafio/), the source `*.iddz` is included.

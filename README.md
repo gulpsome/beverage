@@ -25,6 +25,12 @@ if none of the projects listed are enabled, or configured.
 
 Beverage is all about improving your `gulp` experience with little to no effort.
 
+### Ecosystem
+
+Here is a diagram of dependencies / modules that `beverage` makes more convenient to use.
+
+![](doc/Beverage.jpg)
+
 ## Use
 
 [![NPM](https://nodei.co/npm/beverage.png?mini=true)](https://www.npmjs.org/package/beverage)

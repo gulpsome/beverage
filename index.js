@@ -1,11 +1,32 @@
 require('source-map-support').install()
 
 import R from 'ramda'
-import sourcegate from 'sourcegate'
 import path from 'path'
-let pkg = require(path.join(process.cwd(), 'package.json'))
+import sourcegate from 'sourcegate'
+import {pkg, gulpHelpify} from 'be-goods'
+import chalk from 'chalk'
 
-function def(opts = {}) {
+var logger = require('tracer').console({
+  'filters': {'warn': chalk.yellow, 'error': chalk.red},
+  'format': '<beverage/{{file}}:{{line}}> {{message}}'
+})
+
+function req (name) {
+  let dep = R.has(name)
+  let local = dep(pkg.dependencies || {}) || dep(pkg.devDependencies || {})
+  if (local) {
+    let where = path.normalize(`${process.cwd()}/node_modules/${name}`)
+    return require(path.join(where, require(path.join(where, 'package.json')).main))
+  } else {
+    if (R.not(R.contains(name, ['hal-rc', 'gulp-cause', 'gulp-npm-run']))) {
+      // the above list of exceptions contains modules that will remain bundled as beverage dependencies
+      console.warn(chalk.yellow(`Please install ${name} as a devDependency, future beverage will not buldle it.`))
+    }
+    return require(name)
+  }
+}
+
+function def (opts = {}) {
     opts.dotBeverage = opts.dotBeverage || [
       'node_modules/beverage/node_modules/hal-rc',
       '.'
@@ -17,7 +38,7 @@ function def(opts = {}) {
         exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
         requireStrict: true
       },
-      test: { // NOTE: test is always enabled because of this default -- not so good...
+      test: {
         testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
       }
     }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
@@ -29,13 +50,9 @@ function def(opts = {}) {
     return o
   }
 
-
-export default function(gulpIn, opts) {
+export default function (gulpIn, opts) {
   let o = def(opts)
-  let gulp
-
-  if (pkg.scripts && o.scripts) gulp = require('gulp-npm-run')(gulpIn, o.scripts)
-  else gulp = require('gulp-help')(gulpIn)
+  let gulp = gulpHelpify(gulpIn)
 
   gulp.task('beverage', 'The recipe of this beverage.', () => {
     console.log('\nCurrent beverage options:')
@@ -43,26 +60,49 @@ export default function(gulpIn, opts) {
   })
 
   if (pkg.scripts) {
-    if (o.test && pkg.scripts.test) {
-      let test = require('gulp-npm-test')(gulp, o.test)
+    if (o.scripts) req('gulp-npm-run')(gulp, o.scripts)
 
+    if (o.test && pkg.scripts.test) {
       if (o.testWatch) {
-        gulp.task('test:watch', o.testWatch.toString(), () =>
-          require('gulp-watch')(o.testWatch, test)
-        )
+        // TODO: this whole if should be deleted
+        logger.warn('Option testWatch is deprecated, use test.watch instead.')
+        o.test.watch = o.testWatch
       }
+      req('gulp-npm-test')(gulp, o.test)
     }
 
     if (o.buildWatch && o.scripts) {
+      // TODO: this whole if should be deleted as it's redundant
+      logger.warn('The build & buildWatch options are deprecated, use causality instead.')
       gulp.task(o.build + ':watch', o.buildWatch.toString(), () =>
         gulp.watch(o.buildWatch, [o.build])
       )
     }
   }
 
-  if (o.harp) require('gulp-harp')(gulp, R.pick(['harp'], o))
+  if (o.sourcegate && o.sourcegate.length) {
+    o.sourceopt = o.sourceopt || {}
+    // TODO: the rest of this as far as the req is temporary, for graceful upgrade...
+    // delete afterwards
+    let convert = {'sourcegateModule': 'module',
+                   'sourcegatePrefix': 'prefix',
+                   'sourcegatePreset': 'preset',
+                   'sourcegateWatch': 'watch'}
+    if (R.keys(R.pick(R.keys(convert), o)).length) {
+      for (let key of R.keys(convert)) {
+        if (o.hasOwnProperty(key)) {
+          let val = convert[key]
+          o.sourceopt[val] = o[key]
+          logger.warn(`Deprecated ${key} option, use sourceopt.${val} instead.`)
+        }
+      }
+    }
+    req('hal-rc')(R.pick(['sourcegate', 'sourceopt'], o), gulp)
+  }
 
-  if (o.sourcegate && o.sourcegate.length) require('hal-rc')(o, gulp)
+  if (o.harp) req('gulp-harp')(gulp, R.pick(['harp'], o))
+
+  if (o.causality) req('gulp-cause')(gulp, o.causality)
 
   return gulp
 }

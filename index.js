@@ -90,7 +90,7 @@ export default function (gulpIn, opts) {
                    'sourcegateWatch': 'watch'}
     if (R.keys(R.pick(R.keys(convert), o)).length) {
       for (let key of R.keys(convert)) {
-        if (o[key]) {
+        if (o.hasOwnProperty(key)) {
           let val = convert[key]
           o.sourceopt[val] = o[key]
           logger.warn(`Deprecated ${key} option, use sourceopt.${val} instead.`)

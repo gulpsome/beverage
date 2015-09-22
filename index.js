@@ -12,7 +12,7 @@ var logger = require('tracer').console({
 
 function req (name) {
   if (isLocal(name)) {
-    myRequire(name)
+    return myRequire(name)
   } else {
     if (R.not(R.contains(name, ['hal-rc', 'gulp-cause', 'gulp-npm-run']))) {
       // the above list of exceptions contains modules that will remain bundled as beverage dependencies

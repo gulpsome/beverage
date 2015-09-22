@@ -1,9 +1,8 @@
-require('source-map-support').install()
+import 'source-map-support/register'
 
 import R from 'ramda'
-import path from 'path'
 import sourcegate from 'sourcegate'
-import {pkg, gulpHelpify} from 'be-goods'
+import {pkg, isLocal, myRequire, gulpHelpify} from 'be-goods'
 import chalk from 'chalk'
 
 var logger = require('tracer').console({
@@ -12,11 +11,8 @@ var logger = require('tracer').console({
 })
 
 function req (name) {
-  let dep = R.has(name)
-  let local = dep(pkg.dependencies || {}) || dep(pkg.devDependencies || {})
-  if (local) {
-    let where = path.normalize(`${process.cwd()}/node_modules/${name}`)
-    return require(path.join(where, require(path.join(where, 'package.json')).main))
+  if (isLocal(name)) {
+    myRequire(name)
   } else {
     if (R.not(R.contains(name, ['hal-rc', 'gulp-cause', 'gulp-npm-run']))) {
       // the above list of exceptions contains modules that will remain bundled as beverage dependencies

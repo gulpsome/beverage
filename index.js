@@ -2,13 +2,8 @@ import 'source-map-support/register'
 
 import R from 'ramda'
 import sourcegate from 'sourcegate'
-import {pkg, isLocal, myRequire, gulpHelpify} from 'be-goods'
-import chalk from 'chalk'
-
-var logger = require('tracer').console({
-  'filters': {'warn': chalk.yellow, 'error': chalk.red},
-  'format': '<beverage/{{file}}:{{line}}> {{message}}'
-})
+import {pkg, isLocal, myRequire, gulpHelpify, console} from 'be-goods'
+let logger = console()
 
 function req (name) {
   if (isLocal(name)) {
@@ -16,35 +11,35 @@ function req (name) {
   } else {
     if (R.not(R.contains(name, ['hal-rc', 'gulp-cause', 'gulp-npm-run']))) {
       // the above list of exceptions contains modules that will remain bundled as beverage dependencies
-      console.warn(chalk.yellow(`Please install ${name} as a devDependency, future beverage will not buldle it.`))
+      logger.warn(`Please install ${name} as a devDependency, future beverage will not buldle it.`)
     }
     return require(name)
   }
 }
 
 function def (opts = {}) {
-    opts.dotBeverage = opts.dotBeverage || [
-      'node_modules/beverage/node_modules/hal-rc',
-      '.'
-    ]
+  opts.dotBeverage = opts.dotBeverage || [
+    'node_modules/beverage/node_modules/hal-rc',
+    '.'
+  ]
 
-    let o = sourcegate([{
-      build: 'build',
-      scripts: {
-        exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
-        requireStrict: true
-      },
-      test: {
-        testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
-      }
-    }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
-
-    if (o.scripts.include && o.scripts.include[o.build]) {
-      o = sourcegate([o, {scripts: {require: [o.build]}}])
+  let o = sourcegate([{
+    build: 'build',
+    scripts: {
+      exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
+      requireStrict: true
+    },
+    test: {
+      testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
     }
+  }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
 
-    return o
+  if (o.scripts.include && o.scripts.include[o.build]) {
+    o = sourcegate([o, {scripts: {require: [o.build]}}])
   }
+
+  return o
+}
 
 export default function (gulpIn, opts) {
   let o = def(opts)

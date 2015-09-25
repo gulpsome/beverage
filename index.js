@@ -2,8 +2,7 @@ import 'source-map-support/register'
 
 import R from 'ramda'
 import sourcegate from 'sourcegate'
-import {pkg, isLocal, myRequire, gulpHelpify, console} from 'be-goods'
-let logger = console()
+import {pkg, isLocal, myRequire, gulpHelpify, logger} from 'be-goods'
 
 function req (name) {
   if (isLocal(name)) {
@@ -24,7 +23,7 @@ function def (opts = {}) {
   ]
 
   let o = sourcegate([{
-    build: 'build',
+    build: 'build', // TODO: remove this after the deprecations are phased out
     scripts: {
       exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
       requireStrict: true
@@ -33,10 +32,6 @@ function def (opts = {}) {
       testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
     }
   }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
-
-  if (o.scripts.include && o.scripts.include[o.build]) {
-    o = sourcegate([o, {scripts: {require: [o.build]}}])
-  }
 
   return o
 }

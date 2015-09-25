@@ -21,6 +21,7 @@
   "dependencies": {
     "babel": "^5.8.23",
     "be-goods": "0.0.3",
+    "chalk": "^1.1.1",
     "gulp": "^3.9.0",
     "gulp-cause": "0.0.5-1",
     "gulp-harp": "0.0.2",

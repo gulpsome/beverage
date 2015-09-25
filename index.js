@@ -2,8 +2,7 @@ import 'source-map-support/register'
 
 import R from 'ramda'
 import sourcegate from 'sourcegate'
-import {pkg, isLocal, myRequire, gulpHelpify, console} from 'be-goods'
-let logger = console()
+import {pkg, isLocal, myRequire, gulpHelpify, logger} from 'be-goods'
 
 function req (name) {
   if (isLocal(name)) {

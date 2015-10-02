@@ -30,7 +30,7 @@
     "hal-rc": "0.0.7",
     "ramda": "^0.17.1",
     "source-map-support": "^0.3.2",
-    "sourcegate": "^0.1.3",
+    "sourcegate": "^0.1.4",
     "yargs": "^3.26.0"
   },
   "devDependencies": {

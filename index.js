@@ -29,7 +29,7 @@ function def (opts = {}) {
     }
   }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
 
-  // TODO: add `&& isLocal('gulp-npm-test')`, once the deprecations are phased out
+  // TODO: becomes `if (isLocal('gulp-npm-test'))` after the deprecations are phased out
   if (o.hasOwnProperty('test')) {
     // gulp-npm-test does testing better than gulp-npm-run
     return sourcegate({

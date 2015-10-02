@@ -25,15 +25,22 @@ function def (opts = {}) {
   let o = sourcegate([{
     build: 'build', // TODO: remove this after the deprecations are phased out
     scripts: {
-      exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
       requireStrict: true
-    },
-    test: {
-      testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
     }
   }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
 
-  return o
+  // TODO: add `&& isLocal('gulp-npm-test')`, once the deprecations are phased out
+  if (o.hasOwnProperty('test')) {
+    // gulp-npm-test does testing better than gulp-npm-run
+    return sourcegate({
+      scripts: {exclude: ['test']},
+      test: {
+        testsRe: /\.spec\.coffee$/
+      }
+    }, o)
+  } else {
+    return o
+  }
 }
 
 export default function (gulpIn, opts) {

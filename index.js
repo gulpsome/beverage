@@ -32,12 +32,12 @@ function def (opts = {}) {
   // TODO: becomes `if (isLocal('gulp-npm-test'))` after the deprecations are phased out
   if (o.hasOwnProperty('test')) {
     // gulp-npm-test does testing better than gulp-npm-run
-    return sourcegate({
+    return sourcegate([{
       scripts: {exclude: ['test']},
       test: {
         testsRe: /\.spec\.coffee$/
       }
-    }, o)
+    }, o])
   } else {
     return o
   }

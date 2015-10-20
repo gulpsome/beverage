@@ -25,7 +25,7 @@ if none of the projects listed are enabled, or configured.
 
 Beverage is all about improving your `gulp` experience with little to no effort.
 
-### Ecosystem
+### Ecosystem [![The Ready Column](https://badge.waffle.io/gulpsome/beverage.png?label=ready&title=Urgent)](http://waffle.io/gulpsome/beverage)
 
 Here is a diagram of dependencies / modules that `beverage` makes more convenient to use.
 

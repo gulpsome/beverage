@@ -35,7 +35,7 @@ function def (opts = {}) {
     return sourcegate([{
       scripts: {exclude: ['test']},
       test: {
-        testsRe: '\.spec\.coffee$'
+        testsRe: '\\.spec\\.coffee$'
       }
     }, o])
   } else {

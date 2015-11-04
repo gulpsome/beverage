@@ -43,7 +43,7 @@ function def (opts = {}) {
   }
 }
 
-export default function (gulpIn, opts) {
+module.exports = function (gulpIn, opts) {
   let o = def(opts)
   let gulp = gulpHelpify(gulpIn)
 

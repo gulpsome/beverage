@@ -61,6 +61,11 @@ It will not do anything unless given some options:
 - `scripts: {}` makes gulp tasks for all your `package.json` scripts, see [gulp-npm-run](https://github.com/gulpsome/gulp-npm-run#configure) for optional configuration, the test script / task is better with `gulp-npm-test` which is automatically favored
 - `sourcegate` & `sourceopt`, the latter is optional, both handled by [hal-rc, where they are documented](https://github.com/gulpsome/hal-rc#configure)
 
+### CLI
+
+There is also a [beverage-cli](https://github.com/gulpsome/beverage-cli),
+that can be installed separately.
+
 ### Help
 
 To see what tasks beverage has created:
@@ -68,6 +73,7 @@ To see what tasks beverage has created:
 ```sh
 gulp help
 # or gulp
+# or beve
 # or beverage
 ```
 

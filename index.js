@@ -2,6 +2,7 @@ import 'source-map-support/register'
 
 // NOTE: gulp is a dependency (rather than devDependency) on purpose (a fallback default)
 // TODO: review if / how this works (via be-goods or hal-rc?) -- give a warning if used?
+// beverage-cli is using this as a fallback -- maybe that's where the dependency should be?
 import R from 'ramda'
 import sourcegate from 'sourcegate'
 import {pkg, isLocal, myRequire, gulpHelpify, logger} from 'be-goods'

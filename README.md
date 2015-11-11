@@ -141,16 +141,15 @@ return gulp
 }
 ```
 
-## Test [![Build Status](https://img.shields.io/travis/orlin/beverage.svg?style=flat)](https://travis-ci.org/orlin/beverage)
+## Test [![Build Status](https://img.shields.io/travis/gulpsome/beverage.svg?style=flat)](https://travis-ci.org/gulpsome/beverage)
 
 ```sh
 npm test
 ```
 
-## Dependencies
+## Depvelop [![Dependency Status](https://david-dm.org/gulpsome/beverage.svg)](https://david-dm.org/gulpsome/beverage) [![devDependency Status](https://david-dm.org/gulpsome/beverage/dev-status.svg)](https://david-dm.org/gulpsome/beverage#info=devDependencies)
 
-[![Dependency Status](https://david-dm.org/gulpsome/beverage.svg)](https://david-dm.org/gulpsome/beverage)
-[![devDependency Status](https://david-dm.org/gulpsome/beverage/dev-status.svg)](https://david-dm.org/gulpsome/beverage#info=devDependencies)
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 ## Unlicensed
 

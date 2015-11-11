@@ -1,5 +1,8 @@
 import 'source-map-support/register'
 
+// NOTE: gulp is a dependency (rather than devDependency) on purpose (a fallback default)
+// TODO: review if / how this works (via be-goods or hal-rc?) -- give a warning if used?
+// beverage-cli is using this as a fallback -- maybe that's where the dependency should be?
 import R from 'ramda'
 import sourcegate from 'sourcegate'
 import {pkg, isLocal, myRequire, gulpHelpify, logger} from 'be-goods'
@@ -25,18 +28,25 @@ function def (opts = {}) {
   let o = sourcegate([{
     build: 'build', // TODO: remove this after the deprecations are phased out
     scripts: {
-      exclude: ['test'], // because gulp-npm-test does testing better than gulp-npm-run
       requireStrict: true
-    },
-    test: {
-      testsRe: /\.spec\.coffee$/ // TODO: move to .beverage after changing it to a glob
     }
   }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
 
-  return o
+  // TODO: becomes `if (isLocal('gulp-npm-test'))` after the deprecations are phased out
+  if (o.hasOwnProperty('test') || isLocal('gulp-npm-test')) {
+    // gulp-npm-test does testing better than gulp-npm-run
+    return sourcegate([{
+      scripts: {exclude: ['test']},
+      test: {
+        testsRe: '\\.spec\\.coffee$'
+      }
+    }, o])
+  } else {
+    return o
+  }
 }
 
-export default function (gulpIn, opts) {
+module.exports = function (gulpIn, opts) {
   let o = def(opts)
   let gulp = gulpHelpify(gulpIn)
 

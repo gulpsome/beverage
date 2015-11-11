@@ -5,11 +5,11 @@ The DRYest gulp for the thirsty.
 ## Why
 
 Because even with:
-[gulp-npm-run](https://github.com/orlin/gulp-npm-run),
-[gulp-npm-test](https://github.com/orlin/gulp-npm-test),
-[gulp-cause](https://github.com/orlin/gulp-cause),
+[gulp-npm-run](https://github.com/gulpsome/gulp-npm-run),
+[gulp-npm-test](https://github.com/gulpsome/gulp-npm-test),
+[gulp-cause](https://github.com/gulpsome/gulp-cause),
 [sourcegate](https://github.com/orlin/sourcegate),
-and [hal-rc](https://github.com/orlin/hal-rc) -
+and [hal-rc](https://github.com/gulpsome/hal-rc) -
 I'd still do a lot of copy-pasting between gulpfiles.
 
 ## What
@@ -25,7 +25,7 @@ if none of the projects listed are enabled, or configured.
 
 Beverage is all about improving your `gulp` experience with little to no effort.
 
-### Ecosystem
+### Ecosystem [![The Ready Column](https://badge.waffle.io/gulpsome/beverage.png?label=ready&title=Urgent)](http://waffle.io/gulpsome/beverage)
 
 Here is a diagram of dependencies / modules that `beverage` makes more convenient to use.
 
@@ -55,11 +55,16 @@ require(‘beverage’)(require(‘gulp’))
 It will not do anything unless given some options:
 
 - `dotBeverage: []` contains the relative paths where beverage will look for `.beverage` configuration files - the default is `[‘node_modules/beverage/node_modules/hal-rc’, ’.’]` - this is the only option one would have to override via `gulpfile.js`
-- `causality: []` add declarative tasks via [gulp-cause](https://github.com/orlin/gulp-cause)
-- `harp: {}` web server and browser-sync via [gulp-harp](https://github.com/orlin/gulp-harp)
-- `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/orlin/gulp-npm-test#configure) for configuration options
-- `scripts: {}` makes gulp tasks for all your `package.json` scripts, see [gulp-npm-run](https://github.com/orlin/gulp-npm-run#configure) for optional configuration, the test script / task is better with `gulp-npm-test` which is automatically favored
-- `sourcegate` & `sourceopt`, the latter is optional, both handled by [hal-rc, where they are documented](https://github.com/orlin/hal-rc#configure)
+- `causality: []` add declarative tasks via [gulp-cause](https://github.com/gulpsome/gulp-cause)
+- `harp: {}` web server and browser-sync via [gulp-harp](https://github.com/gulpsome/gulp-harp)
+- `test: {}` will setup `gulp test` provided there is a `npm test` script, see [gulp-npm-test](https://github.com/gulpsome/gulp-npm-test#configure) for configuration options
+- `scripts: {}` makes gulp tasks for all your `package.json` scripts, see [gulp-npm-run](https://github.com/gulpsome/gulp-npm-run#configure) for optional configuration, the test script / task is better with `gulp-npm-test` which is automatically favored
+- `sourcegate` & `sourceopt`, the latter is optional, both handled by [hal-rc, where they are documented](https://github.com/gulpsome/hal-rc#configure)
+
+### CLI
+
+There is also a [beverage-cli](https://github.com/gulpsome/beverage-cli),
+that can be installed separately.
 
 ### Help
 
@@ -68,6 +73,7 @@ To see what tasks beverage has created:
 ```sh
 gulp help
 # or gulp
+# or beve
 # or beverage
 ```
 
@@ -135,16 +141,15 @@ return gulp
 }
 ```
 
-## Test [![Build Status](https://img.shields.io/travis/orlin/beverage.svg?style=flat)](https://travis-ci.org/orlin/beverage)
+## Test [![Build Status](https://img.shields.io/travis/gulpsome/beverage.svg?style=flat)](https://travis-ci.org/gulpsome/beverage)
 
 ```sh
 npm test
 ```
 
-## Dependencies
+## Depvelop [![Dependency Status](https://david-dm.org/gulpsome/beverage.svg)](https://david-dm.org/gulpsome/beverage) [![devDependency Status](https://david-dm.org/gulpsome/beverage/dev-status.svg)](https://david-dm.org/gulpsome/beverage#info=devDependencies)
 
-[![Dependency Status](https://david-dm.org/orlin/beverage.svg)](https://david-dm.org/orlin/beverage)
-[![devDependency Status](https://david-dm.org/orlin/beverage/dev-status.svg)](https://david-dm.org/orlin/beverage#info=devDependencies)
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 ## Unlicensed
 

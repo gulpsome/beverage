@@ -13,7 +13,7 @@ function req (name) {
   } else {
     if (R.not(R.contains(name, ['hal-rc', 'gulp-cause', 'gulp-npm-run']))) {
       // the above list of exceptions contains modules that will remain bundled as beverage dependencies
-      logger.warn(`Please install ${name} as a devDependency, future beverage will not buldle it.`)
+      logger.error(`Please install ${name} as a devDependency.`)
     }
     return require(name)
   }

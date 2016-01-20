@@ -1,5 +1,9 @@
 # beverage -- give it a gulp
 
+[![Version npm](https://img.shields.io/npm/v/beverage.svg?style=flat-square)](https://www.npmjs.com/package/beverage)
+[![Dependencies](https://img.shields.io/david/orlin/beverage.svg?style=flat-square)](https://david-dm.org/orlin/beverage)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com)
+
 The DRYest gulp for the thirsty.
 
 ## Why

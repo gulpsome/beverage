@@ -1,8 +1,8 @@
 import 'source-map-support/register'
 
 // NOTE: gulp is a dependency (rather than devDependency) on purpose (a fallback default)
-// TODO: review if / how this works (via be-goods or hal-rc?) -- give a warning if used?
-// beverage-cli is using this as a fallback -- maybe that's where the dependency should be?
+// perhaps there should be a warning - do `gulp` vs `beverage` commands behave differently?
+
 import R from 'ramda'
 import sourcegate from 'sourcegate'
 import {pkg, isLocal, myRequire, gulpHelpify, logger} from 'be-goods'
@@ -26,15 +26,14 @@ function def (opts = {}) {
   ]
 
   let o = sourcegate([{
-    build: 'build', // TODO: remove this after the deprecations are phased out
     scripts: {
       requireStrict: true
     }
   }].concat(opts.dotBeverage.map(file => file + '/.beverage'), opts))
 
-  // TODO: becomes `if (isLocal('gulp-npm-test'))` after the deprecations are phased out
-  if (o.hasOwnProperty('test') || isLocal('gulp-npm-test')) {
+  if (o.hasOwnProperty('test') && isLocal('gulp-npm-test')) {
     // gulp-npm-test does testing better than gulp-npm-run
+    // NOTE: don't be put-off by `spec.coffee` and change it to match your tests
     return sourcegate([{
       scripts: {exclude: ['test']},
       test: {
@@ -59,40 +58,12 @@ module.exports = function (gulpIn, opts) {
     if (o.scripts) req('gulp-npm-run')(gulp, o.scripts)
 
     if (o.test && pkg.scripts.test) {
-      if (o.testWatch) {
-        // TODO: this whole if should be deleted
-        logger.warn('Option testWatch is deprecated, use test.watch instead.')
-        o.test.watch = o.testWatch
-      }
       req('gulp-npm-test')(gulp, o.test)
-    }
-
-    if (o.buildWatch && o.scripts) {
-      // TODO: this whole if should be deleted as it's redundant
-      logger.warn('The build & buildWatch options are deprecated, use causality instead.')
-      gulp.task(o.build + ':watch', o.buildWatch.toString(), () =>
-        gulp.watch(o.buildWatch, [o.build])
-      )
     }
   }
 
   if (o.sourcegate && o.sourcegate.length) {
     o.sourceopt = o.sourceopt || {}
-    // TODO: the rest of this as far as the req is temporary, for graceful upgrade...
-    // delete afterwards
-    let convert = {'sourcegateModule': 'module',
-                   'sourcegatePrefix': 'prefix',
-                   'sourcegatePreset': 'preset',
-                   'sourcegateWatch': 'watch'}
-    if (R.keys(R.pick(R.keys(convert), o)).length) {
-      for (let key of R.keys(convert)) {
-        if (o.hasOwnProperty(key)) {
-          let val = convert[key]
-          o.sourceopt[val] = o[key]
-          logger.warn(`Deprecated ${key} option, use sourceopt.${val} instead.`)
-        }
-      }
-    }
     req('hal-rc')(R.pick(['sourcegate', 'sourceopt'], o), gulp)
   }
 

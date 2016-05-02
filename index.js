@@ -5,19 +5,9 @@ import 'source-map-support/register'
 
 import R from 'ramda'
 import sourcegate from 'sourcegate'
-import {pkg, isLocal, myRequire, gulpHelpify, logger} from 'be-goods'
+import {prefquire, pkg, isLocal, gulpHelpify} from 'be-goods'
 
-function req (name) {
-  if (isLocal(name)) {
-    return myRequire(name)
-  } else {
-    if (R.not(R.contains(name, ['hal-rc', 'gulp-cause', 'gulp-npm-run']))) {
-      // the above list of exceptions contains modules that will remain bundled as beverage dependencies
-      logger.error(`Please install ${name} as a devDependency.`)
-    }
-    return require(name)
-  }
-}
+let req = prefquire({dev: true, exitOnError: true})
 
 function def (opts = {}) {
   opts.dotBeverage = opts.dotBeverage || [

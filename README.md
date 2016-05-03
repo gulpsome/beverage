@@ -1,5 +1,9 @@
 # beverage -- give it a gulp
 
+[![version npm](https://img.shields.io/npm/v/beverage.svg?style=flat-square)](https://www.npmjs.com/package/beverage)
+[![dependencies](https://img.shields.io/david/gulpsome/beverage.svg?style=flat-square)](https://david-dm.org/gulpsome/beverage)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com)
+
 The DRYest gulp for the thirsty.
 
 ## Why
@@ -47,8 +51,16 @@ var gulp = require('beverage')(require('gulp'), {
 Or, even simpler, if beverage fulfills all your gulp task needs, you could load options from a `.beverage` file with just the following line in `gulpfile.js` to set gulp up:
 
 ```javascript
-require(‘beverage’)(require(‘gulp’))
+var gulp = require(‘beverage’)(require(‘gulp’))
 ```
+
+Or the absolute simplest `gulpfile.js`:
+
+```javascript
+var gulp = require(‘beverage’)
+```
+
+Beverage will use your local gulp if you have it installed, or else its own if you don't care about running a specific version.  This happens automatically, the gulp from your dependencies being given priority if found.  The options in the above example come from `.beverage` but you could also provide you own as a first argument.
 
 ### Configure
 
@@ -114,7 +126,7 @@ Hope this helps.
 Beverage options are deep-merged in the following order of sources:
 
 1. `index.js` - look at the `def` function (it has a few defaults)
-2. `./node_modules/beverage/node_modules/hal-rc/.beverage` - where I keep my preferred beverage defaults
+2. `./node_modules/beverage/node_modules/hal-rc/.beverage` - where I keep hal-rc defaults, in the future there could be more defaults between steps 2 and 3...
 3. `./.beverage` - your project options via a configuration file
 4. `gulpfile.js` - your project options via javascript code
 

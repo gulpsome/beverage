@@ -126,7 +126,7 @@ Hope this helps.
 Beverage options are deep-merged in the following order of sources:
 
 1. `index.js` - look at the `def` function (it has a few defaults)
-2. `./node_modules/beverage/node_modules/hal-rc/.beverage` - where I keep my preferred beverage defaults
+2. `./node_modules/beverage/node_modules/hal-rc/.beverage` - where I keep hal-rc defaults, in the future there could be more defaults between steps 2 and 3...
 3. `./.beverage` - your project options via a configuration file
 4. `gulpfile.js` - your project options via javascript code
 

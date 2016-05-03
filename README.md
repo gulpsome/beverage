@@ -51,8 +51,16 @@ var gulp = require('beverage')(require('gulp'), {
 Or, even simpler, if beverage fulfills all your gulp task needs, you could load options from a `.beverage` file with just the following line in `gulpfile.js` to set gulp up:
 
 ```javascript
-require(‘beverage’)(require(‘gulp’))
+var gulp = require(‘beverage’)(require(‘gulp’))
 ```
+
+Or the absolute simplest `gulpfile.js`:
+
+```javascript
+var gulp = require(‘beverage’)
+```
+
+Beverage will use your local gulp if you have it installed, or else its own if you don't care about running a specific version.  This happens automatically, the gulp from your dependencies being given priority if found.  The options in the above example come from `.beverage` but you could also provide you own as a first argument.
 
 ### Configure
 

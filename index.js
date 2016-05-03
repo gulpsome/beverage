@@ -1,11 +1,11 @@
 import 'source-map-support/register'
 
 // NOTE: gulp is a dependency (rather than devDependency) on purpose (a fallback default)
-// perhaps there should be a warning - do `gulp` vs `beverage` commands behave differently?
 
 import R from 'ramda'
 import sourcegate from 'sourcegate'
 import {prefquire, pkg, isLocal, gulpHelpify} from 'be-goods'
+// import gutil from 'gulp-util'
 
 let req = prefquire({dev: true, exitOnError: true})
 
@@ -35,9 +35,23 @@ function def (opts = {}) {
   }
 }
 
-module.exports = function (gulpIn, opts) {
-  let o = def(opts)
-  let gulp = gulpHelpify(gulpIn)
+function isGulp (o) {
+  if (((o || {}).constructor || {}).name === 'Gulp') {
+    return true
+  } else {
+    return false
+  }
+}
+
+module.exports = function (first, second) {
+  let gulp, o
+  if (isGulp(first)) {
+    gulp = gulpHelpify(first)
+    o = def(second)
+  } else {
+    gulp = gulpHelpify(req('gulp'))
+    o = def(first)
+  }
 
   gulp.task('beverage', 'The recipe of this beverage.', () => {
     console.log('\nCurrent beverage options:')

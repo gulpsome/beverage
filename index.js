@@ -4,7 +4,7 @@ import 'source-map-support/register'
 
 import R from 'ramda'
 import sourcegate from 'sourcegate'
-import {prefquire, pkg, isLocal, gulpHelpify} from 'be-goods'
+import {prefquire, pkg, isLocal, isGulp, gulpHelpify} from 'be-goods'
 // import gutil from 'gulp-util'
 
 let req = prefquire({dev: true, exitOnError: true})
@@ -32,14 +32,6 @@ function def (opts = {}) {
     }, o])
   } else {
     return o
-  }
-}
-
-function isGulp (o) {
-  if (((o || {}).constructor || {}).name === 'Gulp') {
-    return true
-  } else {
-    return false
   }
 }
 

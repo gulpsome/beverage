@@ -57,7 +57,7 @@ var gulp = require(‘beverage’)(require(‘gulp’))
 Or the absolute simplest `gulpfile.js`:
 
 ```javascript
-var gulp = require(‘beverage’)
+var gulp = require(‘beverage’)()
 ```
 
 Beverage will use your local gulp if you have it installed, or else its own if you don't care about running a specific version.  This happens automatically, the gulp from your dependencies being given priority if found.  The options in the above example come from `.beverage` but you could also provide you own as a first argument.

@@ -2,10 +2,9 @@ import 'source-map-support/register'
 
 // NOTE: gulp is a dependency (rather than devDependency) on purpose (a fallback default)
 
-import R from 'ramda'
-import sourcegate from 'sourcegate'
 import {prefquire, pkg, isLocal, isGulp, gulpHelpify} from 'be-goods'
-// import gutil from 'gulp-util'
+import sourcegate from 'sourcegate'
+import pick from 'lodash.pick'
 
 let req = prefquire({dev: true, exitOnError: true})
 
@@ -60,10 +59,10 @@ module.exports = function (first, second) {
 
   if (o.sourcegate && o.sourcegate.length) {
     o.sourceopt = o.sourceopt || {}
-    req('hal-rc')(R.pick(['sourcegate', 'sourceopt'], o), gulp)
+    req('hal-rc')(pick(o, ['sourcegate', 'sourceopt']), gulp)
   }
 
-  if (o.harp) req('gulp-harp')(gulp, R.pick(['harp'], o))
+  if (o.harp) req('gulp-harp')(gulp, pick(o, ['harp']))
 
   if (o.causality) req('gulp-cause')(gulp, o.causality)
 

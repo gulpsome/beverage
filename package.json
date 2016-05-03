@@ -23,7 +23,7 @@
     "gulp-cause": "0.0.7",
     "gulp-npm-run": "0.0.3",
     "hal-rc": "0.0.8",
-    "ramda": "^0.21.0",
+    "lodash.pick": "4.2.0",
     "source-map-support": "^0.4.0",
     "sourcegate": "^0.1.4",
     "yargs": "^4.6.0"

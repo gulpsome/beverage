@@ -1,8 +1,6 @@
 import 'source-map-support/register'
 
-// NOTE: gulp is a dependency (rather than devDependency) on purpose (a fallback default)
-
-import {prefquire, pkg, isLocal, isGulp, gulpHelpify} from 'be-goods'
+import {prefquire, pkg, isLocal, myRequire, isGulp, gulpHelpify} from 'be-goods'
 import sourcegate from 'sourcegate'
 import pick from 'lodash.pick'
 
@@ -40,7 +38,14 @@ module.exports = function (first, second) {
     gulp = gulpHelpify(first)
     o = def(second)
   } else {
-    gulp = gulpHelpify(req('gulp'))
+    // NOTE: gulp must be locally installed (relative to gulpfile.js / cwd)
+    if (isLocal('gulp', true)) {
+      gulp = gulpHelpify(myRequire('gulp'))
+    } else {
+      // It should not be possible to run this code.
+      // Both gulp and beverage-cli prevent it from happening.
+      throw new Error('Gulp insists on a local node_modules/gulp install.')
+    }
     o = def(first)
   }
 

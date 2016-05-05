@@ -10,6 +10,8 @@ This `beverage` simplifies your `npm run` experience with little to no effort, i
 
 This `beverage` doubles your tasty `gulp` fun with even less effort, it's all the same, `gulp` on.
 
+Beverage is something to pour in a `gulp` cup.
+
 ## Why
 
 Because even with:

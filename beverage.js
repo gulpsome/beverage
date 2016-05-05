@@ -53,7 +53,7 @@ module.exports = function (first, second) {
     if (o.scripts) req('gulp-npm-run')(gulp, o.scripts)
 
     if (o.test && pkg.scripts.test) {
-      req('gulp-npm-test')(gulp, o.test)
+      req('gulp-npm-test', {forceLocal: true})(gulp, o.test)
     }
   }
 
@@ -62,7 +62,7 @@ module.exports = function (first, second) {
     req('hal-rc')(pick(o, ['sourcegate', 'sourceopt']), gulp)
   }
 
-  if (o.harp) req('gulp-harp')(gulp, pick(o, ['harp']))
+  if (o.harp) req('gulp-harp', {forceLocal: true})(gulp, pick(o, ['harp']))
 
   if (o.causality) req('gulp-cause')(gulp, o.causality)
 

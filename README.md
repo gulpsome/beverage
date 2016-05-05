@@ -63,7 +63,7 @@ Or the absolute simplest `gulpfile.js`:
 var gulp = require(‘beverage’)()
 ```
 
-Beverage will use your local gulp and you must have it installed, something that gulp itself insists on.  Otherwise you will be reminded.  The options in this last example come from `.beverage` but you could also provide you own as a first argument.
+Beverage will use your local gulp and you must have it installed, something that gulp itself insists on.  Otherwise you will be reminded.  The options in this last example come from `.beverage` but you could also provide you own as a first argument:
 
 ```javascript
 var gulp = require(‘beverage’)({

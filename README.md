@@ -4,7 +4,11 @@
 [![dependencies](https://img.shields.io/david/gulpsome/beverage.svg?style=flat-square)](https://david-dm.org/gulpsome/beverage)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com)
 
-The DRYest gulp for the thirsty.
+_The DRYest gulp for the thirsty._
+
+This `beverage` simplifies your `npm run` experience with little to no effort, it just becomes `gulp` too.
+
+This `beverage` doubles your tasty `gulp` fun with even less effort, it's all the same, `gulp` on.
 
 ## Why
 
@@ -24,10 +28,7 @@ and some linter / hinter config, that could be common /
 similar across projects, as well as a `dev` task that
 runs the above and perhaps some other tasks in parallel...
 
-All of the above are optional, but there would be no use of beverage
-if none of the projects listed are enabled, or configured.
-
-Beverage is all about improving your `gulp` experience with little to no effort.
+All of the above are optional, yet there would be no use of beverage if none of these projects are enabled by configuration, these or the so far few others not listed up-front.  Make your own beverage.  Read on to find out what could be in it.
 
 ### Ecosystem [![The Ready Column](https://badge.waffle.io/gulpsome/beverage.png?label=ready&title=Urgent)](http://waffle.io/gulpsome/beverage)
 

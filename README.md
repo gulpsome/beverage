@@ -46,7 +46,7 @@ All that's needed in a `gulpfile.js`, besides gulp, for starters, is:
 
 ```javascript
 var gulp = require('beverage')(require('gulp'), {
-  // options listed next
+  // beverage options listed next
 })
 // use gulp as you would otherise
 ```
@@ -64,6 +64,13 @@ var gulp = require(‘beverage’)()
 ```
 
 Beverage will use your local gulp and you must have it installed, something that gulp itself insists on.  Otherwise you will be reminded.  The options in this last example come from `.beverage` but you could also provide you own as a first argument.
+
+```javascript
+var gulp = require(‘beverage’)({
+  // beverage options next...
+})
+// anything else you #gulp
+```
 
 ### Configure
 

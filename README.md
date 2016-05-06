@@ -40,6 +40,8 @@ Here is a diagram of dependencies / modules  `beverage` can help with:
 
 [![](doc/Beverage.jpg "follow the link for more info")](doc)
 
+Follow the infographic link above for explanation about what the colors mean.  The modules are useful on their own, mostly with gulp, though also developed with beverage.  It can be easy to forget what the interdependencies are.  I come back to it when I need a reminder.  If you like `npm link` and would like to hack on these, I recommend [npm-interlink](https://github.com/orlin/npm-interlink) to bootstrap a development environment.  That can be useful for any project with a number of interdependent modules...
+
 ## Use
 
 [![NPM](https://nodei.co/npm/beverage.png?mini=true)](https://www.npmjs.org/package/beverage)

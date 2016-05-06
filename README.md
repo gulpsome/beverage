@@ -18,9 +18,11 @@ Because even with:
 [gulp-npm-run](https://github.com/gulpsome/gulp-npm-run),
 [gulp-npm-test](https://github.com/gulpsome/gulp-npm-test),
 [gulp-cause](https://github.com/gulpsome/gulp-cause),
-[sourcegate](https://github.com/orlin/sourcegate),
-and [hal-rc](https://github.com/gulpsome/hal-rc) -
+[hal-rc](https://github.com/gulpsome/hal-rc),
+and [gulp-harp](https://github.com/gulpsome/gulp-harp) -
 I'd still do a lot of copy-pasting between gulpfiles.
+Just turning your npm scripts into gulp tasks,
+with a single line of code, should be enough motivation.
 
 ## What
 
@@ -30,11 +32,11 @@ and some linter / hinter config, that could be common /
 similar across projects, as well as a `dev` task that
 runs the above and perhaps some other tasks in parallel...
 
-All of the above are optional, yet there would be no use of beverage if none of these projects are enabled by configuration, these or the so far few others not listed up-front.  Make your own beverage.  Read on to find out what could be in it.
+All of the above are optional, yet there would be no use of beverage if none of these projects are enabled by configuration, these or possibly some others not listed up-front.  Make your own beverage.  Read on to find out what could be in it.
 
 ### Ecosystem [![The Ready Column](https://badge.waffle.io/gulpsome/beverage.png?label=ready&title=Urgent)](http://waffle.io/gulpsome/beverage)
 
-Here is a diagram of dependencies / modules that `beverage` makes more convenient to use.
+Here is a diagram of dependencies / modules  `beverage` can help with:
 
 [![](doc/Beverage.jpg "follow the link for more info")](doc)
 

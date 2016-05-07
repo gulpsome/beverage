@@ -17,8 +17,8 @@
   "author": "Orlin M Bozhinov <om@soundsapiens.com>",
   "main": "beverage.es5.js",
   "dependencies": {
-    "be-goods": "0.0.7",
-    "gulp-cause": "0.0.8",
+    "be-goods": "0.0.8",
+    "gulp-cause": "0.0.7",
     "gulp-npm-run": "0.0.3",
     "hal-rc": "0.0.8",
     "lodash.pick": "4.2.0",
